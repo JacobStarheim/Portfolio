@@ -19,6 +19,10 @@ Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukerop
 
 På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flyttes kortene under bildene. «Bare kunsten» skjuler tekstlagene, og prosjektknappene åpner utdypende beskrivelser.
 
+Mellom kunstbildene ligger egne kort for Nimmo (Traveller), Nimmo Driver og IN5320, fulgt av en introduksjon til hobbyprosjektene. Appkortene lenker til de offisielle appene i App Store og Google Play. De opprinnelige detaljknappene for NIMMO og IN5320 er beholdt. De ekstra kortene skjules også i «Bare kunsten», slik at tråden fortsatt binder kunstbildene sammen.
+
+Alderen i «Om meg» beregnes i nettleseren fra fødselsdatoen 7. november 2001, etter norsk dato (`Europe/Oslo`). Den oppdateres automatisk, også når en åpen fane får fokus igjen. Statisk HTML lagrer ikke en alder som kan bli foreldet; siden trenger ingen årlig publisering.
+
 Under det siste bildet ligger «Kode over tid»: en GitHub-kalender i porteføljens papir- og rødtoner. Kalenderen viser bidrag siste året, støtter valg av dag med mus, berøring og piltaster, og kan rulles sidelengs på mobil. «Bare kunsten» skjuler også kalenderen.
 
 ## Teknologi og tilgjengelighet
@@ -57,7 +61,7 @@ npm run dev
 | `npm run dev` | Start utviklingsserveren. |
 | `npm run typecheck` | Kontroller TypeScript-typer. |
 | `npm run lint` | Kjør ESLint uten tillatte advarsler. |
-| `npm test` | Test validering, summering og kalenderlayout uten nettverk. |
+| `npm test` | Test automatisk alder, datavalidering og kalenderlayout uten nettverk. |
 | `npm run build` | Lag et produksjonsbygg og eksporter til `out/`. |
 | `npm start` | Server det ferdige bygget fra `out/` på port 3000. |
 
@@ -66,6 +70,9 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 ## Hvor innholdet ligger
 
 - [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
+- [src/components/project-cards.tsx](src/components/project-cards.tsx) — egne appkort, IN5320 og introduksjon til hobbyprosjekter.
+- [src/styles/project-cards.css](src/styles/project-cards.css) — responsive prosjektkort og overganger mellom kunstbildene.
+- [src/components/age.tsx](src/components/age.tsx) og [src/lib/age.ts](src/lib/age.ts) — alder som oppdateres automatisk etter norsk dato.
 - [src/components/github-calendar.tsx](src/components/github-calendar.tsx) — GitHub-kalender, henting, feilvisning og tastaturbetjening.
 - [src/lib/github-contributions.ts](src/lib/github-contributions.ts) — validering og datobasert kalenderlayout.
 - [src/styles/github-calendar.css](src/styles/github-calendar.css) — kalenderens papirfelt, aktivitetsruter og mobilvisning.

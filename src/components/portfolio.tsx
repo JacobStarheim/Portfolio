@@ -2,10 +2,29 @@
 
 import { useEffect, useRef, useState } from "react";
 import GitHubCalendar from "./github-calendar";
+import Age from "./age";
+import { EducationProject, HobbyIntro, NimmoApps } from "./project-cards";
 
 const github = "https://github.com/JacobStarheim";
 const linkedin = "https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/";
 const email = "jacobvinstar@gmail.com";
+
+const nimmoApps = [
+  {
+    id: "nimmo-traveller", number: "01.A", audience: "TRAVELLER · FOR REISENDE", name: "Nimmo",
+    description: "Appen for reisende og foresatte: finn og bestill delt transport, se billettene dine og følg turen på kartet.",
+    contribution: "Jeg har jobbet med blant annet reisesøk, booking, billetter, innlogging og foresatt-/barneflyter, samt tilgjengelighet og feilretting. Jeg har også distribuert testversjoner og publisert appen til begge appbutikkene.",
+    features: ["Reisesøk", "Booking", "Billetter", "Kart"],
+    stores: [{ label: "App Store", href: "https://apps.apple.com/no/app/nimmo/id1672565306" }, { label: "Google Play", href: "https://play.google.com/store/apps/details?id=no.nimmo.app" }],
+  },
+  {
+    id: "nimmo-driver", number: "01.B", audience: "DRIVER · FOR SJÅFØRER", name: "Nimmo Driver",
+    description: "Sjåførens verktøy for gjennomføring av turen, med oversikt over kjørerute, passasjerer og hvor de skal hentes og leveres.",
+    contribution: "Jeg bidrar til videreutvikling og feilretting, med vekt på stabile brukerflyter, tilgjengelighet og samspillet med resten av systemet. Jeg har også distribuert testversjoner og publisert appen til begge appbutikkene.",
+    features: ["Kjøreruter", "Passasjerer", "Kart", "Henting og levering"],
+    stores: [{ label: "App Store", href: "https://apps.apple.com/no/app/nimmo-driver/id6748903380" }, { label: "Google Play", href: "https://play.google.com/store/apps/details?id=no.nimmo.driver" }],
+  },
+];
 
 type Project = {
   title: string; eyebrow: string; lead: string; body: string[];
@@ -158,7 +177,7 @@ export default function Portfolio() {
       <nav ref={navigation} id="primary-navigation" aria-label="Hovedmeny" className={menuOpen ? "navigation navigation--open" : "navigation"} onKeyDown={(event) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } }}>
         <a href="#arbeid" onClick={() => setMenuOpen(false)}>Arbeid</a>
         <a href="#utdanning" onClick={() => setMenuOpen(false)}>Utdanning</a>
-        <a href="#open-bfme" onClick={() => setMenuOpen(false)}>Prosjekter</a>
+        <a href={artOnly ? "#open-bfme" : "#hobbyprosjekter"} onClick={() => setMenuOpen(false)}>Prosjekter</a>
         <a href="#om-meg" onClick={() => setMenuOpen(false)}>Om meg <Arrow /></a>
       </nav>
       <div className="header-tools">
@@ -191,7 +210,12 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>01 / FORBINDELSER</span><span>ET UTVALG AV DET JEG BYGGER OG BRYR MEG OM</span></div>
       </section>
 
-      <Thread start={526.7} end={489.6} label="01 — 02" />
+      <div className="story-insert annotation">
+        <Thread start={526.7} end={500} label="01 / APPENE" />
+        <NimmoApps apps={nimmoApps} />
+        <Thread start={500} end={489.6} label="01 — 02" />
+      </div>
+      <div className="art-only-bridge"><Thread start={526.7} end={489.6} label="01 — 02" /></div>
 
       <section className="plate" id="utdanning" aria-label="Utdanning og IN5320">
         <Chapter number="02" title="Å FORSTÅ" />
@@ -206,7 +230,14 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>KUNNSKAP SOM BYGGESTEINER</span><span>UIO / USN</span></div>
       </section>
 
-      <Thread start={472.9} end={502.4} label="02 — 03" />
+      <div className="story-insert annotation">
+        <Thread start={472.9} end={500} label="02 / I PRAKSIS" />
+        <EducationProject onOpen={() => openProject("education")} />
+        <Thread start={500} end={500} label="VIDERE PÅ EGEN HÅND" />
+        <HobbyIntro />
+        <Thread start={500} end={502.4} label="02 — 03" />
+      </div>
+      <div className="art-only-bridge"><Thread start={472.9} end={502.4} label="02 — 03" /></div>
 
       <section className="plate" id="open-bfme" aria-label="Open BFME">
         <Chapter number="03" title="Å GJENSKAPE" />
@@ -255,7 +286,7 @@ export default function Portfolio() {
           <figcaption>Jacob Vindal Starheim</figcaption>
         </figure>
         <Card number="06" category="OM MEG" title="Det er mer enn kode.">
-          <p>Jeg er Jacob Vindal Starheim, utvikler og masterstudent med stor interesse for AI. Jeg følger utviklingen tett og liker å utforske hvordan nye modeller og verktøy kan brukes i praksis.</p>
+          <p>Jeg er Jacob Vindal Starheim, <Age />utvikler og masterstudent med stor interesse for AI. Jeg følger utviklingen tett og liker å utforske hvordan nye modeller og verktøy kan brukes i praksis.</p>
           <p>Jeg er gift og liker å tilbringe tid med kona mi, venner og familie. Jeg er også glad i å reise, spille sjakk og videospill.</p>
           <div className="contact-links">
             <a href={`mailto:${email}`}>La oss snakke sammen <Arrow /></a>

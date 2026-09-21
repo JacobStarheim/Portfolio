@@ -1,0 +1,77 @@
+.project-insert { position: relative; max-width: 1120px; margin: 0 auto; scroll-margin-top: 110px; }
+.project-insert::before { position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--red); content: ""; }
+.story-insert { position: relative; isolation: isolate; }
+.art-only-bridge { display: none; }
+.art-only .art-only-bridge { display: block; }
+.insert-heading { max-width: 620px; margin: 0 auto; padding: 0 20px 42px; background: var(--night); text-align: center; }
+.insert-heading .eyebrow { justify-content: center; color: #c8c8b7; font-size: 9px; }
+.insert-heading h2, .hobby-intro h2 { margin: 20px 0; font-family: var(--font-serif); font-size: clamp(34px, 4.3vw, 60px); font-weight: 400; letter-spacing: -.045em; line-height: 1.08; text-wrap: balance; }
+.insert-heading > p:last-child { max-width: 490px; margin: 0 auto; color: #b8bcae; font-size: 13px; line-height: 1.85; }
+.mobile-app-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.project-sheet { position: relative; padding: clamp(28px, 3.4vw, 48px); border: 1px solid #d7d0be; background: var(--paper); color: var(--ink); box-shadow: 0 12px 35px rgb(6 16 16 / 16%); }
+.project-sheet::after { position: absolute; right: 9px; bottom: 9px; width: 8px; height: 8px; border-right: 1px solid #9e9d88; border-bottom: 1px solid #9e9d88; content: ""; pointer-events: none; }
+.sheet-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; color: #616357; font-family: var(--font-geist-mono), monospace; font-size: 9px; line-height: 1.6; letter-spacing: .07em; }
+.sheet-meta > span:last-child { flex-shrink: 0; color: #a13e2e; }
+.mobile-app-card { display: flex; flex-direction: column; scroll-margin-top: 110px; }
+.mobile-app-card h3 { margin: 23px 0 18px; font-family: var(--font-serif); font-size: clamp(36px, 4vw, 52px); font-weight: 400; line-height: 1.05; letter-spacing: -.045em; }
+.app-purpose, .app-contribution p, .course-overview > p { margin: 0; color: #394943; font-size: 13px; line-height: 1.85; }
+.app-features { display: flex; flex-wrap: wrap; gap: 8px; margin: 23px 0 28px; padding: 0; list-style: none; }
+.app-features li { padding: 6px 9px; border: 1px solid #c7c5b1; color: #536056; font-family: var(--font-geist-mono), monospace; font-size: 9px; line-height: 1.5; }
+.app-contribution { flex: 1; padding: 23px 0 28px; border-top: 1px solid #c7c5b1; }
+.app-contribution h4 { margin: 0 0 10px; color: var(--ink); font-size: 12px; font-weight: 600; }
+.app-store-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.app-store-links a { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; padding: 11px 13px; border: 1px solid #b9b8a4; color: var(--ink); font-size: 11px; font-weight: 550; }
+.app-store-links a:hover { border-color: #a53325; color: #a53325; }
+.sheet-stack { margin: 20px 0 0; color: #616357; font-family: var(--font-geist-mono), monospace; font-size: 9px; line-height: 1.8; }
+.insert-source { display: flex; justify-content: center; width: fit-content; max-width: 100%; margin: 0 auto; padding: 21px 20px 0; background: var(--night); color: #b8bcae; font-size: 10px; }
+.insert-source a { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; }
+.insert-source a:hover { color: var(--paper); }
+.course-project { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 76px); }
+.course-overview h2 { margin: 29px 0 8px; font-family: var(--font-serif); font-size: clamp(48px, 6vw, 80px); font-weight: 400; line-height: 1; letter-spacing: -.065em; }
+.course-overview > .course-subtitle { margin-bottom: 23px; color: var(--ink); font-family: var(--font-serif); font-size: 25px; letter-spacing: -.035em; line-height: 1.2; }
+.course-result { display: flex; align-items: center; gap: 18px; margin-top: 29px; padding-top: 23px; border-top: 1px solid #c7c5b1; }
+.course-grade { color: #a13e2e; font-family: var(--font-serif); font-size: 56px; line-height: 1; }
+.course-result p { margin: 0; color: #536056; font-size: 10px; line-height: 1.75; }
+.course-result strong, .course-result p > span { display: block; }
+.course-result strong { margin-bottom: 3px; color: var(--ink); font-size: 12px; font-weight: 550; }
+.course-contributions .eyebrow { color: #616357; font-size: 9px; }
+.course-work { display: grid; gap: 23px; margin: 27px 0 25px; padding: 0; list-style: none; }
+.course-work li { display: flex; gap: 16px; }
+.course-work li > span { padding-top: 3px; color: #a13e2e; font-family: var(--font-geist-mono), monospace; font-size: 9px; }
+.course-work h3 { margin: 0 0 5px; font-size: 13px; font-weight: 550; }
+.course-work p { margin: 0; color: #394943; font-size: 12px; line-height: 1.8; }
+.course-actions { display: flex; flex-wrap: wrap; column-gap: 24px; row-gap: 10px; margin-top: 21px; }
+.course-actions .text-link { font-size: 11px; }
+.hobby-intro { padding: clamp(30px, 5vw, 64px); border: 1px solid rgb(239 232 216 / 25%); background: var(--night); text-align: center; }
+.hobby-intro .eyebrow { justify-content: center; color: #c8c8b7; font-size: 9px; }
+.hobby-intro > p:not(.eyebrow) { max-width: 550px; margin: 0 auto; color: #b8bcae; font-size: 13px; line-height: 1.85; }
+.hobby-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; max-width: 790px; margin: 37px auto 0; text-align: left; }
+.hobby-links a { display: flex; align-items: center; gap: 13px; min-height: 48px; border-top: 1px solid rgb(239 232 216 / 25%); font-size: 12px; }
+.hobby-links a > span:first-child { color: #cf7968; font-family: var(--font-geist-mono), monospace; font-size: 9px; }
+.hobby-links a > span:last-child { margin-left: auto; color: #cf7968; }
+.hobby-links a:hover { color: #fff7e3; }
+@media (max-width: 760px) {
+  .project-insert { margin: 0 12px; scroll-margin-top: 88px; }
+  .insert-heading { padding: 0 4px 30px; }
+  .insert-heading h2, .hobby-intro h2 { font-size: clamp(32px, 7.5vw, 46px); }
+  .insert-heading .eyebrow, .hobby-intro .eyebrow { font-size: 8px; }
+  .mobile-app-grid, .course-project { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .project-sheet { padding: 28px; }
+  .mobile-app-card { scroll-margin-top: 88px; }
+  .mobile-app-card h3 { font-size: 38px; }
+  .sheet-meta { font-size: 8px; }
+  .app-store-links { grid-template-columns: minmax(0, 1fr); }
+  .app-purpose, .app-contribution p, .course-overview > p { font-size: 13px; }
+  .course-contributions { padding-top: 28px; border-top: 1px solid #c7c5b1; }
+  .course-contributions .eyebrow { font-size: 8px; }
+  .course-overview h2 { font-size: 57px; }
+  .course-actions { align-items: flex-start; flex-direction: column; }
+  .hobby-intro { padding: 35px 24px; }
+  .hobby-links { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 27px; }
+  .hobby-links a { min-height: 54px; }
+}
+@media (max-width: 380px) {
+  .project-insert { margin-right: 8px; margin-left: 8px; }
+  .project-sheet { padding: 23px; }
+  .hobby-intro { padding-right: 23px; padding-left: 23px; }
+}
