@@ -61,7 +61,7 @@ Constraints: fine single cream perimeter rule like the reference. No lettering, 
 
 ## bfme
 
-Current artwork: [Middle-earth / Minas Tirith revision](bfme-middle-earth-prompt.md), generated after the user requested a Lord of the Rings-inspired scene. The original prompt below is retained as history and no longer describes the active artwork.
+Current artwork: [Minas Tirith revision 2](bfme-minas-tirith-v2-prompt.md), using Wētā's model as an architectural reference for a closer resemblance. The [first Middle-earth revision](bfme-middle-earth-prompt.md) and the original prompt below are retained as history and no longer describe the active artwork.
 
 # Open BFME artwork prompt
 

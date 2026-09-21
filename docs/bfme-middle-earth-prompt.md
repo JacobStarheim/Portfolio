@@ -1,5 +1,7 @@
 # Open BFME — Middle-earth revision
 
+Historical revision from commit `02a963e`. Superseded by [Minas Tirith revision 2](bfme-minas-tirith-v2-prompt.md).
+
 Created with the built-in OpenAI image tool. The exact backend model variant is not exposed by this interface.
 
 Reference 1 / edit target: `public/art/bfme.webp` from the original portfolio release.
@@ -21,7 +23,7 @@ A single slender vermilion-red physical thread enters the TOP edge at 49.8% of t
 
 Constraints: preserve the reference series' detailed engraved/gouache-on-aged-paper visual style and thin inset ivory frame on all four sides. Complete uncropped square artwork. No text, lettering, labels, logos, watermarks, UI, people, portraits, photorealism, glossy 3D rendering, or modern objects. No extra symbols or landmarks competing with Minas Tirith.
 
-## Saved artwork
+## Artwork at this revision
 
 - `public/art/bfme.webp`: 1254 × 1254, desktop version.
 - `public/art/bfme-640.webp`: 640 × 640, mobile version.

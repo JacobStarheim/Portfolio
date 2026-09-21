@@ -12,7 +12,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 ::selection { background: #bc483b; color: #fff5e0; }
 #arbeid { --thread-end: 52.67%; }
 #utdanning { --thread-end: 47.29%; }
-#open-bfme { --thread-end: 52.36%; }
+#open-bfme { --thread-end: 52.31%; }
 #aipodcast { --thread-end: 50.56%; }
 #sjakk { --thread-end: 52.27%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
