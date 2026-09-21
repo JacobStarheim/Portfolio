@@ -8,7 +8,7 @@ const email = "jacobvinstar@gmail.com";
 
 type Project = {
   title: string; eyebrow: string; lead: string; body: string[];
-  contributions: string[]; stack: string[];
+  contributions: (string | { title: string; description: string })[]; stack: string[];
   links?: { label: string; href: string }[];
 };
 
@@ -16,9 +16,34 @@ const projects: Record<string, Project> = {
   nimmo: {
     title: "Mobil, med mennesket i sentrum.", eyebrow: "NIMMO · ARBEIDSERFARING",
     lead: "Junior programvareutvikler, deltid · juni 2025–nå",
-    body: ["Hos NIMMO jobber jeg med Traveller og Driver: to Flutter-apper for reisende og sjåfører. Jeg liker å følge en feil fra det brukeren opplever, gjennom appen og helt inn i dataene bak.", "Arbeidet spenner fra synlige forbedringer i innlogging og tilgjengelighet til kart, posisjonering og feilsøking på tvers av mobil og backend."],
-    contributions: ["Forbedret innlogging med Android-autofyll og iOS-hint.", "Tilpasset grensesnitt for større tekst og zoom.", "Jobbet med kart, GPS, bakgrunnsposisjonering og håndtering av feiltilstander.", "Undersøkt problemer med Firebase, Firestore, SQL og monorepoet, og dokumentert feil og forbedringer i Jira."],
-    stack: ["Flutter", "Dart", "iOS / Android", "Firebase", "Firestore", "SQL"],
+    body: ["Hos NIMMO jobber jeg med Traveller og Driver: to Flutter-apper for reisende og sjåfører. Jeg har bidratt med nye funksjoner, videreutvikling og feilretting i begge appene.", "Arbeidet spenner fra brukerflyt og tilgjengelighet til testing og feilsøking på tvers av apper, data og backend. Jeg liker å følge et problem fra det brukeren opplever, helt inn til årsaken — og videre til en løsning sammen med teamet."],
+    contributions: [
+      {
+        title: "Mobilutvikling i Traveller og Driver",
+        description: "Utviklet og forbedret funksjoner i Flutter/Dart for reisesøk, booking av faste og dynamiske ruter, billetter, kart, kjøretøyposisjon og forventet ankomsttid (ETA). Jeg har også jobbet med innlogging, profiler og flyter for foresatte og barn.",
+      },
+      {
+        title: "Brukeropplevelse og tilgjengelighet",
+        description: "Tilpasset appene for større tekst og små skjermer, implementert Android SMS-autofill og jobbet med språk, oversettelser, caching, datohåndtering og kvitteringer. Jeg har vært opptatt av at funksjonene fungerer godt i praksis på både Android og iOS.",
+      },
+      {
+        title: "Feilsøking på tvers av systemet",
+        description: "Brukt Firebase/Firestore, SQL og backend-koden i monorepoet til å undersøke bookingfeil, tilgang til private ruter, synkroniseringsavvik og feil i ETA-data. I samarbeid med backendutviklerne har jeg bidratt med konkrete reproduksjoner, identifisert rotårsaker og testet rettelser. I flere saker har jeg også foreslått konkrete løsninger og nødvendige kodeendringer i backend.",
+      },
+      {
+        title: "Kvalitet og initiativ",
+        description: "Funnet og meldt inn bugs, foreslått forbedringer og fulgt opp saker med utviklere og QA. Jeg har jobbet med valideringstester, Firebase-emulator og refaktorering for bedre testbarhet, og tatt initiativ til diskusjoner om teststrategi og hvordan produktet skal oppføre seg.",
+      },
+      {
+        title: "AI-assistert utvikling og sikkerhetsanalyse",
+        description: "Brukt AI aktivt til implementering, kodeanalyse, feilsøking og gjennomgang av endringer, kombinert med testing og oppfølging av konkrete funn. Jeg har også bidratt til sikkerhetsanalyse med Codex Security.",
+      },
+      {
+        title: "Ansvar når det haster",
+        description: "Tatt initiativ og stilt opp når kritiske feil måtte løses, også utenfor vanlig arbeidstid. Jeg har vært opptatt av å avklare årsaken og følge problemene frem til en løsning når de har hatt betydning for brukerne og driften.",
+      },
+    ],
+    stack: ["Flutter", "Dart", "Android / iOS", "Firebase", "Firestore", "SQL", "Firebase Emulator", "Jira", "Codex Security"],
   },
   education: {
     title: "Fra data til forståelse.", eyebrow: "UIO · IN5320",
@@ -246,7 +271,10 @@ export default function Portfolio() {
         <p className="dialog-lead">{selected.lead}</p>
         {selected.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         <h3>Mitt bidrag</h3>
-        <ul className="contributions">{selected.contributions.map((contribution) => <li key={contribution}>{contribution}</li>)}</ul>
+        <ul className="contributions">{selected.contributions.map((contribution) => typeof contribution === "string"
+          ? <li key={contribution}>{contribution}</li>
+          : <li key={contribution.title} className="contribution-detail"><h4>{contribution.title}</h4><p>{contribution.description}</p></li>
+        )}</ul>
         <p className="dialog-stack">{selected.stack.join(" / ")}</p>
         {selected.links && <div className="dialog-links">{selected.links.map((link) => <a key={link.href} className="text-link" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}<Arrow /></a>)}</div>}
         <button className="dialog-back text-link" onClick={closeProject}>Tilbake til historien <span aria-hidden="true">↩</span></button>
