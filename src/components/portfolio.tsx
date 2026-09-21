@@ -16,7 +16,7 @@ const projects: Record<string, Project> = {
   nimmo: {
     title: "Mobil, med mennesket i sentrum.", eyebrow: "NIMMO · ARBEIDSERFARING",
     lead: "Junior programvareutvikler, deltid · juni 2025–nå",
-    body: ["Hos NIMMO jobber jeg med Traveller og Driver: to Flutter-apper for reisende og sjåfører. Jeg har bidratt med nye funksjoner, videreutvikling og feilretting i begge appene.", "Arbeidet spenner fra brukerflyt og tilgjengelighet til testing og feilsøking på tvers av apper, data og backend. Jeg liker å følge et problem fra det brukeren opplever, helt inn til årsaken — og videre til en løsning sammen med teamet."],
+    body: ["Hos NIMMO jobber jeg med Traveller og Driver: to Flutter-apper for reisende og sjåfører. Jeg har bidratt med nye funksjoner, videreutvikling og feilretting i begge appene.", "Arbeidet spenner fra brukerflyt og tilgjengelighet til testing, publisering og feilsøking på tvers av apper, data og backend. Jeg liker å følge et problem fra det brukeren opplever, helt inn til årsaken — og videre til en løsning sammen med teamet."],
     contributions: [
       {
         title: "Mobilutvikling i Traveller og Driver",
@@ -35,6 +35,10 @@ const projects: Record<string, Project> = {
         description: "Funnet og meldt inn bugs, foreslått forbedringer og fulgt opp saker med utviklere og QA. Jeg har jobbet med valideringstester, Firebase-emulator og refaktorering for bedre testbarhet, og tatt initiativ til diskusjoner om teststrategi og hvordan produktet skal oppføre seg.",
       },
       {
+        title: "Testdistribusjon og publisering",
+        description: "Bygd og distribuert testversjoner av både Traveller og Driver gjennom Firebase App Distribution. Jeg har også publisert appene til Google Play og Apple App Store.",
+      },
+      {
         title: "AI-assistert utvikling og sikkerhetsanalyse",
         description: "Brukt AI aktivt til implementering, kodeanalyse, feilsøking og gjennomgang av endringer, kombinert med testing og oppfølging av konkrete funn. Jeg har også bidratt til sikkerhetsanalyse med Codex Security.",
       },
@@ -43,7 +47,7 @@ const projects: Record<string, Project> = {
         description: "Tatt initiativ og stilt opp når kritiske feil måtte løses, også utenfor vanlig arbeidstid. Jeg har vært opptatt av å avklare årsaken og følge problemene frem til en løsning når de har hatt betydning for brukerne og driften.",
       },
     ],
-    stack: ["Flutter", "Dart", "Android / iOS", "Firebase", "Firestore", "SQL", "Firebase Emulator", "Jira", "Codex Security"],
+    stack: ["Flutter", "Dart", "Android / iOS", "Firebase", "Firestore", "SQL", "Firebase Emulator", "Firebase App Distribution", "Jira", "Codex Security"],
   },
   education: {
     title: "Fra data til forståelse.", eyebrow: "UIO · IN5320",
