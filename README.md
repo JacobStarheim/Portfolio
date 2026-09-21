@@ -52,7 +52,9 @@ Vercel-prosjekt: `jacobstarheim`, under `jacobs-projects-deb8c182`. Bruk en forh
 npx vercel deploy -y
 ```
 
-Arbeidsgrenen for den nye porteføljen er `codex/art-portfolio`. GitHub-koblingen til `JacobStarheim/Portfolio` må være aktiv i Vercel før pushes kan bygge automatisk. Med koblingen aktiv gir arbeidsgrener forhåndsvisninger; en push eller merge til produksjonsgrenen `main` kan publisere produksjon. Ikke merge før versjonen er godkjent.
+GitHub-koblingen til `JacobStarheim/Portfolio` er aktiv i Vercel. Arbeidsgrenen for den nye porteføljen er `codex/art-portfolio`: pushes til denne grenen oppretter forhåndsvisninger. Produksjonsgrenen er `main`; en push eller merge dit kan oppdatere den offentlige siden. Ikke merge før versjonen er godkjent.
+
+Den første CLI-publiseringen ble automatisk satt til produksjon av Vercel, selv med `--target preview`. Siden finnes på https://jacobstarheim.vercel.app. For videre arbeid brukes Git-forhåndsvisninger på arbeidsgrenen; verifiser alltid miljø og byggestatus før en lenke deles. Ikke opprett prosjektet på nytt for å teste forhåndsvisninger.
 
 Vercel-forhåndsvisninger er merket `noindex`; produksjonsbygg kan indekseres. `VERCEL_URL` brukes som basis for delingsmetadata ved bygg på Vercel. Bygg fra kildekoden på Vercel, ikke last opp en lokal `out/` med localhost-metadata. `.env*` og lokal Vercel-autentisering skal verken pushes eller lastes opp.
 

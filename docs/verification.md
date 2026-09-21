@@ -13,8 +13,10 @@
 
 The `jacobstarheim` project has been created in `jacobs-projects-deb8c182` and linked to this directory, using the Next.js preset and Node.js 24. The new portfolio is on `codex/art-portfolio`; `main` is unchanged.
 
-Vercel login is verified after reauthentication. The first GitHub connection attempt was rejected; repository access in the Vercel GitHub integration still needs verification. Local GitHub CLI access works.
+Vercel login is verified after reauthentication. The portfolio commit `e3f567a` has been pushed to `codex/art-portfolio`; remote `main` remains at `e31556b`.
 
-Preview publication and the GitHub connection are being set up. No production deployment has been requested. Check Vercel's reported deployment status before sharing a preview URL.
+The first CLI deployment completed as `READY`, but unexpectedly targeted production despite the explicit `--target preview` flag. Vercel CLI 59.23.2 removes that target before submission, allowing first-deployment promotion. The live alias is https://jacobstarheim.vercel.app and deployment ID is `dpl_46jLt1ejkU6ALn9mumd1KR3GU4oR`. The user has been informed; no later merge, removal or production change has been made.
+
+After the user updated GitHub access, the Vercel project API confirmed the connection: provider `github`, owner `JacobStarheim`, repository `Portfolio`, production branch `main`. The workflow uses `codex/art-portfolio` for automatic previews. Do not push `main` merely to test the integration; check the branch deployment's target and status in Vercel instead.
 
 For a Vercel source build, social metadata uses `VERCEL_URL`. The current local export has a localhost metadata origin and should not be uploaded as a prebuilt production artifact without rebuilding for the verified public origin.
