@@ -252,7 +252,7 @@ export default function Portfolio() {
         <Art name="about" alt="To tomme trestoler under et gammelt tre, vendt mot en solfylt fjord. Den røde tråden ender stille mellom stolene." />
         <Card number="06" category="OM MEG" title="Det er mer enn kode.">
           <p>Jeg er Jacob Vindal Starheim. Utvikler, masterstudent og glad i sjakk, gode spørsmål og å forstå hvordan ting virker.</p>
-          <p>Og mest av alt: glad i kona mi. Noen forbindelser er viktigere enn alle andre.</p>
+          <p>Jeg er gift og liker å tilbringe tid med kona mi, venner og familie. På fritiden spiller jeg også gjerne videospill.</p>
           <div className="contact-links">
             <a href={`mailto:${email}`}>La oss snakke sammen <Arrow /></a>
             <a href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <Arrow /></a>
