@@ -176,11 +176,11 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>KUNNSKAP SOM BYGGESTEINER</span><span>UIO / USN</span></div>
       </section>
 
-      <Thread start={472.9} end={498} label="02 — 03" />
+      <Thread start={472.9} end={502.1} label="02 — 03" />
 
       <section className="plate" id="open-bfme" aria-label="Open BFME">
         <Chapter number="03" title="Å GJENSKAPE" />
-        <Art name="bfme" alt="En fantasiborg under rekonstruksjon, med synlige konstruksjonstegninger og svevende steinblokker forbundet av den røde tråden." />
+        <Art name="bfme" alt="En Minas Tirith-inspirert hvit festningsby med terrasserte murer, et høyt tårn og det hvite treet foran dramatiske fjell. En rød tråd følger portene gjennom byen." />
         <Card number="03" category="OPEN SOURCE" title="Gamle verdener. Nye oppdagelser." side="lower-left" onOpen={() => openProject("bfme")} action="Utforsk bidragene">
           <p className="note-subtitle">OPEN BFME 1 & 2</p>
           <p>Å forstå et system ved å bygge det opp igjen. Jeg bidrar til rekonstruksjon av spillkode i C++ og ble invitert inn som collaborator i begge prosjektene.</p>
@@ -189,7 +189,7 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>BAK FASADEN FINNES ET SYSTEM</span><span>BIDRAG TIL ET FELLES PROSJEKT</span></div>
       </section>
 
-      <Thread start={523.5} end={501.6} label="03 — 04" />
+      <Thread start={523.6} end={501.6} label="03 — 04" />
 
       <section className="plate" id="aipodcast" aria-label="AIpodcast">
         <Chapter number="04" title="Å LYTTE" />
