@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import GitHubCalendar from "./github-calendar";
 
 const github = "https://github.com/JacobStarheim";
 const linkedin = "https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/";
@@ -261,6 +262,8 @@ export default function Portfolio() {
         </Card>
         <div className="plate-caption annotation"><span>TRÅDEN ENDER IKKE HER.</span><a href={`mailto:${email}`}>SI HEI <Arrow /></a></div>
       </section>
+
+      <GitHubCalendar />
     </main>
 
     <footer className="site-footer">

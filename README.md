@@ -19,6 +19,8 @@ Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukerop
 
 På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flyttes kortene under bildene. «Bare kunsten» skjuler tekstlagene, og prosjektknappene åpner utdypende beskrivelser.
 
+Under det siste bildet ligger «Kode over tid»: en GitHub-kalender i porteføljens papir- og rødtoner. Kalenderen viser bidrag siste året, støtter valg av dag med mus, berøring og piltaster, og kan rulles sidelengs på mobil. «Bare kunsten» skjuler også kalenderen.
+
 ## Teknologi og tilgjengelighet
 
 - Next.js 16, React 19 og TypeScript, med statisk eksport.
@@ -26,6 +28,14 @@ På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flytt
 - Native HTML-dialoger med tastaturbetjening, Escape-lukking og tilbakeføring av fokus.
 - Hopp-til-innhold-lenke, synlige fokusmarkeringer, alternativ tekst og støtte for redusert bevegelse.
 - Ingen database, backend-tjeneste eller API-nøkkel er nødvendig for å kjøre porteføljen. Kontaktlenkene går direkte til e-post, LinkedIn og GitHub.
+
+### GitHub-kalender
+
+Kalenderen henter offentlig synlige profildata for `JacobStarheim` ved sidebesøk fra [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api), med `?y=last`. Tjenesten mellomlagrer svar i én time. Det brukes ingen GitHub-token, innloggingsinformasjonskapsler eller repo-tilgang; forespørselen sender ikke sidens referer. Dette er en ekstern tredjepartstjeneste som mottar den besøkendes IP-adresse som ved vanlige nettverksforespørsler.
+
+Inndata valideres før visning, og datoene behandles i UTC. Feil eller tidsavbrudd viser en forklaring, en prøv-igjen-knapp og den eksisterende GitHub-lenken — ikke en kalender med oppdiktede nullverdier. Det finnes ingen lokal datasnapshot eller bakgrunnsjobb som må oppdateres.
+
+«Bidrag» følger synligheten på GitHub-profilen og er ikke det samme som antall commits eller totalt arbeid. Se [GitHubs definisjon](https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference).
 
 ## Kjør lokalt
 
@@ -47,6 +57,7 @@ npm run dev
 | `npm run dev` | Start utviklingsserveren. |
 | `npm run typecheck` | Kontroller TypeScript-typer. |
 | `npm run lint` | Kjør ESLint uten tillatte advarsler. |
+| `npm test` | Test validering, summering og kalenderlayout uten nettverk. |
 | `npm run build` | Lag et produksjonsbygg og eksporter til `out/`. |
 | `npm start` | Server det ferdige bygget fra `out/` på port 3000. |
 
@@ -55,6 +66,9 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 ## Hvor innholdet ligger
 
 - [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
+- [src/components/github-calendar.tsx](src/components/github-calendar.tsx) — GitHub-kalender, henting, feilvisning og tastaturbetjening.
+- [src/lib/github-contributions.ts](src/lib/github-contributions.ts) — validering og datobasert kalenderlayout.
+- [src/styles/github-calendar.css](src/styles/github-calendar.css) — kalenderens papirfelt, aktivitetsruter og mobilvisning.
 - [src/styles/portfolio.css](src/styles/portfolio.css) — layout, kunstgalleri, tekstkort og mobilvisning.
 - [src/app/globals.css](src/app/globals.css) — globale stiler, fokusmarkeringer og redusert bevegelse.
 - [src/app/layout.tsx](src/app/layout.tsx) — språk, fonter og delingsmetadata.

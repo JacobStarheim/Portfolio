@@ -1,4 +1,5 @@
 @import "../styles/portfolio.css";
+@import "../styles/github-calendar.css";
 
 :root { --ink: #112224; --night: #101e20; --paper: #efe8d8; --muted: #aca996; --red: #cf4938; --font-serif: Georgia, "Times New Roman", serif; }
 * { box-sizing: border-box; }
