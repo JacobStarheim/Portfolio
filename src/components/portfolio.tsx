@@ -255,8 +255,8 @@ export default function Portfolio() {
           <figcaption>Jacob Vindal Starheim</figcaption>
         </figure>
         <Card number="06" category="OM MEG" title="Det er mer enn kode.">
-          <p>Jeg er Jacob Vindal Starheim. Utvikler, masterstudent og glad i sjakk, gode spørsmål og å forstå hvordan ting virker.</p>
-          <p>Jeg er gift og liker å tilbringe tid med kona mi, venner og familie. På fritiden spiller jeg også gjerne videospill.</p>
+          <p>Jeg er Jacob Vindal Starheim, utvikler og masterstudent med stor interesse for AI. Jeg følger utviklingen tett og liker å utforske hvordan nye modeller og verktøy kan brukes i praksis.</p>
+          <p>Jeg er gift og liker å tilbringe tid med kona mi, venner og familie. Jeg er også glad i å reise, spille sjakk og videospill.</p>
           <div className="contact-links">
             <a href={`mailto:${email}`}>La oss snakke sammen <Arrow /></a>
             <a href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <Arrow /></a>
