@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import GitHubCalendar from "./github-calendar";
 import Age from "./age";
-import { EducationProject, HobbyIntro, NimmoApps } from "./project-cards";
+import { ArtThread, artThreadStyle } from "./art-thread";
 
 const github = "https://github.com/JacobStarheim";
 const linkedin = "https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/";
@@ -11,20 +11,22 @@ const email = "jacobvinstar@gmail.com";
 
 const nimmoApps = [
   {
-    id: "nimmo-traveller", number: "01.A", audience: "TRAVELLER · FOR REISENDE", name: "Nimmo",
+    id: "nimmo-traveller", art: "traveller", number: "02", audience: "TRAVELLER · FOR REISENDE", name: "Nimmo",
+    title: "En enklere vei dit du skal.", chapter: "Å KOMME FREM", side: "right",
+    alt: "En gravert fjordby med en minibuss, en foresatt og et barn ved holdeplassen. En rød tråd forbinder hjemmene med reisen og aktivitetene i bygda.",
     description: "Appen for reisende og foresatte: finn og bestill delt transport, se billettene dine og følg turen på kartet.",
-    contribution: "Jeg har jobbet med blant annet reisesøk, booking, billetter, innlogging og foresatt-/barneflyter, samt tilgjengelighet og feilretting. Jeg har også distribuert testversjoner og publisert appen til begge appbutikkene.",
-    features: ["Reisesøk", "Booking", "Billetter", "Kart"],
+    contribution: "Mitt arbeid spenner fra reisesøk og booking til innlogging, barneflyter og tilgjengelighet — og videre til testdistribusjon og publisering.",
     stores: [{ label: "App Store", href: "https://apps.apple.com/no/app/nimmo/id1672565306" }, { label: "Google Play", href: "https://play.google.com/store/apps/details?id=no.nimmo.app" }],
   },
   {
-    id: "nimmo-driver", number: "01.B", audience: "DRIVER · FOR SJÅFØRER", name: "Nimmo Driver",
+    id: "nimmo-driver", art: "driver", number: "03", audience: "DRIVER · FOR SJÅFØRER", name: "Nimmo Driver",
+    title: "Oversikt hele veien.", chapter: "Å VISE VEI", side: "left",
+    alt: "Utsikt fra førerplassen i en minibuss, med ratt, fjordvei og passasjerer ved to holdeplasser. Den røde tråden følger turen fra stopp til stopp.",
     description: "Sjåførens verktøy for gjennomføring av turen, med oversikt over kjørerute, passasjerer og hvor de skal hentes og leveres.",
-    contribution: "Jeg bidrar til videreutvikling og feilretting, med vekt på stabile brukerflyter, tilgjengelighet og samspillet med resten av systemet. Jeg har også distribuert testversjoner og publisert appen til begge appbutikkene.",
-    features: ["Kjøreruter", "Passasjerer", "Kart", "Henting og levering"],
+    contribution: "Jeg jobber med videreutvikling, feilretting og tilgjengelighet, samspillet med backend, testdistribusjon og publisering til begge appbutikkene.",
     stores: [{ label: "App Store", href: "https://apps.apple.com/no/app/nimmo-driver/id6748903380" }, { label: "Google Play", href: "https://play.google.com/store/apps/details?id=no.nimmo.driver" }],
   },
-];
+] as const;
 
 type Project = {
   title: string; eyebrow: string; lead: string; body: string[];
@@ -113,14 +115,6 @@ function Art({ name, alt, eager = false }: { name: string; alt: string; eager?: 
   </picture>;
 }
 
-function Thread({ start, end, label }: { start: number; end: number; label: string }) {
-  return <div className="interlude" aria-hidden="true">
-    <span className="interlude-label">{label}</span>
-    <svg viewBox="0 0 1000 110" preserveAspectRatio="none"><path d={`M ${start} 0 C ${start + 18} 40, ${end - 18} 70, ${end} 110`} /></svg>
-    <span className="interlude-note">FØLG TRÅDEN</span>
-  </div>;
-}
-
 function Chapter({ number, title }: { number: string; title: string }) {
   return <div className="chapter-label annotation"><span>{number}</span><span>{title}</span></div>;
 }
@@ -177,7 +171,7 @@ export default function Portfolio() {
       <nav ref={navigation} id="primary-navigation" aria-label="Hovedmeny" className={menuOpen ? "navigation navigation--open" : "navigation"} onKeyDown={(event) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } }}>
         <a href="#arbeid" onClick={() => setMenuOpen(false)}>Arbeid</a>
         <a href="#utdanning" onClick={() => setMenuOpen(false)}>Utdanning</a>
-        <a href={artOnly ? "#open-bfme" : "#hobbyprosjekter"} onClick={() => setMenuOpen(false)}>Prosjekter</a>
+        <a href="#hobbyprosjekter" onClick={() => setMenuOpen(false)}>Prosjekter</a>
         <a href="#om-meg" onClick={() => setMenuOpen(false)}>Om meg <Arrow /></a>
       </nav>
       <div className="header-tools">
@@ -190,7 +184,7 @@ export default function Portfolio() {
     </header>
 
     <main id="top" className={artOnly ? "gallery art-only" : "gallery"}>
-      <section className="plate opening" id="arbeid" aria-label="Introduksjon og NIMMO">
+      <section className="plate opening" id="arbeid" style={artThreadStyle("nimmo")} aria-label="Introduksjon og NIMMO">
         <div className="hero-intro annotation">
           <p className="eyebrow"><span className="red-dot" /> PROGRAMVAREUTVIKLER & NYSGJERRIGPER</p>
           <h1>Jacob<br /><em>Starheim.</em></h1>
@@ -210,17 +204,28 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>01 / FORBINDELSER</span><span>ET UTVALG AV DET JEG BYGGER OG BRYR MEG OM</span></div>
       </section>
 
-      <div className="story-insert annotation">
-        <Thread start={526.7} end={500} label="01 / APPENE" />
-        <NimmoApps apps={nimmoApps} />
-        <Thread start={500} end={489.6} label="01 — 02" />
-      </div>
-      <div className="art-only-bridge"><Thread start={526.7} end={489.6} label="01 — 02" /></div>
+      <ArtThread from="nimmo" to="traveller" label="01 — 02" artOnly={artOnly} />
 
-      <section className="plate" id="utdanning" aria-label="Utdanning og IN5320">
-        <Chapter number="02" title="Å FORSTÅ" />
+      {nimmoApps.map((app, index) => <div key={app.id}>
+        <section className="plate app-plate" id={app.id} style={artThreadStyle(app.art)} aria-label={app.name === "Nimmo" ? "Nimmo Traveller" : app.name}>
+          <Chapter number={app.number} title={app.chapter} />
+          <Art name={app.art} alt={app.alt} />
+          <Card number={app.number} category={app.audience} title={app.title} side={app.side}>
+            <p className="note-subtitle">{app.name.toUpperCase()}</p>
+            <p>{app.description}</p>
+            <p>{app.contribution}</p>
+            <p className="note-stack">Flutter · Dart · Android & iOS</p>
+            <div className="app-store-links">{app.stores.map((store) => <a key={store.href} href={store.href} target="_blank" rel="noopener noreferrer" aria-label={`${app.name} i ${store.label}`}>{store.label}<Arrow /></a>)}</div>
+          </Card>
+          <div className="plate-caption annotation"><span>{index === 0 ? "FRA HJEM TIL HVERDAGENS AKTIVITETER" : "MENNESKENE BAK HVERT STOPP"}</span><span>EN DEL AV NIMMO-TEAMET</span></div>
+        </section>
+        <ArtThread from={app.art} to={index === 0 ? "driver" : "education"} label={index === 0 ? "02 — 03" : "03 — 04"} artOnly={artOnly} />
+      </div>)}
+
+      <section className="plate" id="utdanning" style={artThreadStyle("education")} aria-label="Utdanning og IN5320">
+        <Chapter number="04" title="Å FORSTÅ" />
         <Art name="education" alt="Et åpent bibliotek med varme lesesaler, bøker og diagrammer. Den røde tråden følger en vei gjennom etasjene." />
-        <Card number="02" category="UTDANNING" title="Nysgjerrighet, satt i system." side="right" onOpen={() => openProject("education")} action="IN5320 — prosjektet bak en A">
+        <Card number="04" category="UTDANNING" title="Nysgjerrighet, satt i system." side="right" onOpen={() => openProject("education")} action="IN5320 — prosjektet bak en A">
           <div className="education-list">
             <div><span className="note-date">2026 — 2028 · PÅGÅENDE</span><h3>Master i Computer Science</h3><p>Universitetet i Sørøst-Norge<br />Forventet fullført juni 2028.</p></div>
             <div><span className="note-date">2022 — 2025</span><h3>Informatikk: design, bruk og interaksjon</h3><p>Bachelor · Universitetet i Oslo</p></div>
@@ -230,19 +235,44 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>KUNNSKAP SOM BYGGESTEINER</span><span>UIO / USN</span></div>
       </section>
 
-      <div className="story-insert annotation">
-        <Thread start={472.9} end={500} label="02 / I PRAKSIS" />
-        <EducationProject onOpen={() => openProject("education")} />
-        <Thread start={500} end={500} label="VIDERE PÅ EGEN HÅND" />
-        <HobbyIntro />
-        <Thread start={500} end={502.4} label="02 — 03" />
-      </div>
-      <div className="art-only-bridge"><Thread start={472.9} end={502.4} label="02 — 03" /></div>
+      <ArtThread from="education" to="in5320" label="04 — 05" artOnly={artOnly} />
 
-      <section className="plate" id="open-bfme" aria-label="Open BFME">
-        <Chapter number="03" title="Å GJENSKAPE" />
+      <section className="plate" id="in5320" style={artThreadStyle("in5320")} aria-label="IN5320 skoleinspeksjonsverktøy">
+        <Chapter number="05" title="Å SE SAMMENHENGER" />
+        <Art name="in5320" alt="Tre små skoler i et gravert landskap. En rød tråd fører fra klasserommene til en åpen protokoll og diagrammer for sammenligning, utvikling og fordeling." />
+        <Card number="05" category="UIO · GRUPPEPROSJEKT" title="Fra skoledata til innsikt." side="right" onOpen={() => openProject("education")} action="Les om IN5320">
+          <p className="note-subtitle">IN5320 · HØSTEN 2025 · A I EMNET</p>
+          <p>Et skoleinspeksjonsverktøy bygget med React og DHIS2. Mitt hovedbidrag var analysemodulen: å hente, bearbeide og visualisere data om skolenes ressurser.</p>
+          <p>Egne SVG-diagrammer gjør det lettere å sammenligne skoler og følge utvikling over tid.</p>
+          <p className="note-stack">React · DHIS2 · SVG · Datavisualisering</p>
+          <a className="text-link" href={`${github}/IN5320`} target="_blank" rel="noopener noreferrer">Se koden på GitHub<Arrow /></a>
+        </Card>
+        <div className="plate-caption annotation"><span>FRA OBSERVASJON TIL FORSTÅELSE</span><span>30 STUDIEPOENG PÅ MASTERNIVÅ VED UIO</span></div>
+      </section>
+
+      <ArtThread from="in5320" to="hobbies" label="05 — 06" artOnly={artOnly} />
+
+      <section className="plate" id="hobbyprosjekter" style={artThreadStyle("hobbies")} aria-label="Hobbyprosjekter og open source">
+        <Chapter number="06" title="Å PRØVE SEG FREM" />
+        <Art name="hobbies" alt="Et gravert verksted med en halvferdig steinby, en sjakkspringer og et lydapparat på en bok. En rød tråd forbinder prosjektene over arbeidsbenken." />
+        <Card number="06" category="HOBBYPROSJEKTER & OPEN SOURCE" title="Det jeg bygger på fritiden.">
+          <p>Spill jeg vil forstå, ideer jeg vil prøve og interesser jeg vil utforske videre. Noe bygger jeg selv, annet bidrar jeg til sammen med andre.</p>
+          <p>Herfra følger tråden tre av prosjektene jeg bruker fritiden på.</p>
+          <nav className="hobby-links" aria-label="Hobbyprosjekter">
+            <a href="#open-bfme"><span>07</span>Open BFME<span aria-hidden="true">↓</span></a>
+            <a href="#aipodcast"><span>08</span>AIpodcast<span aria-hidden="true">↓</span></a>
+            <a href="#sjakk"><span>09</span>Chess<span aria-hidden="true">↓</span></a>
+          </nav>
+        </Card>
+        <div className="plate-caption annotation"><span>ET VERKSTED FOR EGNE IDEER</span><span>NYSGJERRIGHET UTEN PENSUM</span></div>
+      </section>
+
+      <ArtThread from="hobbies" to="bfme" label="06 — 07" artOnly={artOnly} />
+
+      <section className="plate" id="open-bfme" style={artThreadStyle("bfme")} aria-label="Open BFME">
+        <Chapter number="07" title="Å GJENSKAPE" />
         <Art name="bfme" alt="Minas Tirith i gravyrstil: en enorm klippe deler den hvite byen, med buede murringer på begge sider og et slankt hvitt tårn over citadellet. En rød tråd følger portene gjennom byen." />
-        <Card number="03" category="OPEN SOURCE" title="Gamle verdener. Nye oppdagelser." side="lower-left" onOpen={() => openProject("bfme")} action="Utforsk bidragene">
+        <Card number="07" category="OPEN SOURCE" title="Gamle verdener. Nye oppdagelser." side="lower-left" onOpen={() => openProject("bfme")} action="Utforsk bidragene">
           <p className="note-subtitle">OPEN BFME 1 & 2</p>
           <p>Å forstå et system ved å bygge det opp igjen. Jeg bidrar til rekonstruksjon av spillkode i C++ og ble invitert inn som collaborator i begge prosjektene.</p>
           <p className="note-stack">C++ · Reverse engineering · ABI</p>
@@ -250,12 +280,12 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>BAK FASADEN FINNES ET SYSTEM</span><span>BIDRAG TIL ET FELLES PROSJEKT</span></div>
       </section>
 
-      <Thread start={523.1} end={501.6} label="03 — 04" />
+      <ArtThread from="bfme" to="podcast" label="07 — 08" artOnly={artOnly} />
 
-      <section className="plate" id="aipodcast" aria-label="AIpodcast">
-        <Chapter number="04" title="Å LYTTE" />
+      <section className="plate" id="aipodcast" style={artThreadStyle("podcast")} aria-label="AIpodcast">
+        <Chapter number="08" title="Å LYTTE" />
         <Art name="podcast" alt="Et fantasifullt lydbibliotek med konkylier, bøker, lydbånd og en tom lyttestol. Den røde tråden leder tilbake til lydkilden." />
-        <Card number="04" category="PERSONLIG PROSJEKT" title="Et spørsmål. En kilde. En ny tanke." side="right" onOpen={() => openProject("podcast")}>
+        <Card number="08" category="PERSONLIG PROSJEKT" title="Et spørsmål. En kilde. En ny tanke." side="right" onOpen={() => openProject("podcast")}>
           <p className="note-subtitle">AIPODCAST</p>
           <p>Hva om du kunne snakke med en podkast? En AI-prototype som lar deg stille spørsmål — og høre akkurat hvor i opptaket svaret kommer fra.</p>
           <p className="note-stack">Flutter · TypeScript · pgvector · RAG</p>
@@ -263,12 +293,12 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>FØLG SVARET TILBAKE TIL KILDEN</span><span>PROTOTYPE / UTFORSKNING</span></div>
       </section>
 
-      <Thread start={505.6} end={501.2} label="04 — 05" />
+      <ArtThread from="podcast" to="chess" label="08 — 09" artOnly={artOnly} />
 
-      <section className="plate" id="sjakk" aria-label="Sjakkprosjekt">
-        <Chapter number="05" title="Å TENKE FREMOVER" />
+      <section className="plate" id="sjakk" style={artThreadStyle("chess")} aria-label="Sjakkprosjekt">
+        <Chapter number="09" title="Å TENKE FREMOVER" />
         <Art name="chess" alt="En elfenbensfarget springer i et sjakklandskap av terrasser, broer og fjell. Den røde tråden følger mulige trekk gjennom landskapet." />
-        <Card number="05" category="KODE & INTERESSE" title="Alltid et trekk til." side="right" onOpen={() => openProject("chess")}>
+        <Card number="09" category="KODE & INTERESSE" title="Alltid et trekk til." side="right" onOpen={() => openProject("chess")}>
           <p className="note-subtitle">CHESS</p>
           <p>Jeg liker å se etter mønstre. På brettet, i koden og i forbindelsen mellom dem. Et desktop-verktøy for sjakkanalyse, motorintegrasjon og import av stillinger fra bilder.</p>
           <p className="note-stack">Electron · React · Python · Stockfish</p>
@@ -276,16 +306,16 @@ export default function Portfolio() {
         <div className="plate-caption annotation"><span>ET LITE BRETT. STORE MULIGHETER.</span><span>PERSONLIG PROSJEKT</span></div>
       </section>
 
-      <Thread start={522.7} end={546.3} label="05 — 06" />
+      <ArtThread from="chess" to="about" label="09 — 10" artOnly={artOnly} />
 
       <section className="plate about-plate" id="om-meg" aria-label="Om meg og kontakt">
-        <Chapter number="06" title="DET SOM BETYR NOE" />
+        <Chapter number="10" title="DET SOM BETYR NOE" />
         <Art name="about" alt="To tomme trestoler under et gammelt tre, vendt mot en solfylt fjord. Den røde tråden ender stille mellom stolene." />
         <figure className="about-portrait annotation">
           <picture><img src="/jacob-starheim.jpeg" alt="Portrett av Jacob Vindal Starheim" width={800} height={600} loading="lazy" decoding="async" /></picture>
           <figcaption>Jacob Vindal Starheim</figcaption>
         </figure>
-        <Card number="06" category="OM MEG" title="Det er mer enn kode.">
+        <Card number="10" category="OM MEG" title="Det er mer enn kode.">
           <p>Jeg er Jacob Vindal Starheim, <Age />utvikler og masterstudent med stor interesse for AI. Jeg følger utviklingen tett og liker å utforske hvordan nye modeller og verktøy kan brukes i praksis.</p>
           <p>Jeg er gift og liker å tilbringe tid med kona mi, venner og familie. Jeg er også glad i å reise, spille sjakk og videospill.</p>
           <div className="contact-links">

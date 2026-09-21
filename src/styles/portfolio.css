@@ -342,8 +342,17 @@
 }
 
 .interlude svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.interlude path { fill: none; stroke: var(--red); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.interlude path { stroke: none; }
 .interlude-label, .interlude-note { position: relative; z-index: 1; }
+
+.app-store-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 23px; }
+.app-store-links a { display: inline-flex; flex: 1 1 110px; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; padding: 10px 12px; border: 1px solid #b9b8a4; font-size: 11px; font-weight: 550; }
+.app-store-links a:hover { border-color: #a53325; color: #a53325; }
+.hobby-links { display: grid; margin-top: 25px; }
+.hobby-links a { display: flex; align-items: center; gap: 16px; min-height: 48px; border-top: 1px solid #c7c5b1; font-size: 12px; }
+.hobby-links a > span { color: #a13e2e; font-family: var(--font-geist-mono), monospace; font-size: 10px; }
+.hobby-links a > span:last-child { margin-left: auto; }
+.hobby-links a:hover { color: #a53325; }
 
 .education-list { margin-top: 27px; }
 .education-list > div + div { margin-top: 20px; padding-top: 18px; border-top: 1px solid #cbc9b6; }
@@ -476,7 +485,8 @@
   .navigation a:last-child { border-bottom: 0; }
   .gallery { padding: 14px 14px 0; }
   .plate { scroll-margin-top: 86px; }
-  .plate:not(.about-plate)::after { position: absolute; z-index: 0; inset: 0 auto 0 var(--thread-end, 52%); width: 1.5px; background: var(--red); content: ""; pointer-events: none; }
+  .plate:not(.about-plate)::after { position: absolute; z-index: 0; inset: 0 auto 0 var(--thread-end); width: max(1px, var(--thread-width)); transform: translateX(-50%); background: var(--thread-color); content: ""; pointer-events: none; }
+  .art-only .plate::after { display: none; }
   .artwork { position: relative; z-index: 1; }
   .hero-intro { position: relative; inset: auto; width: auto; padding: 36px 14px 43px; background: var(--night); text-shadow: none; }
   .hero-intro .eyebrow { gap: 8px; font-size: clamp(7px, 1.8vw, 10px); letter-spacing: .055em; }
@@ -502,7 +512,6 @@
   .plate-caption a { min-height: 44px; }
   .interlude { height: 91px; padding: 0 16px; font-size: 7px; }
   .interlude-note { display: none; }
-  .interlude path { stroke-width: 1.5; }
   .education-list { margin-top: 25px; }
   .education-list > div + div { margin-top: 21px; padding-top: 18px; }
   .education-list h3 { font-size: 14px; }
@@ -528,6 +537,10 @@
   .dialog-links { flex-direction: column; align-items: flex-start; }
   .dialog-links .text-link { font-size: 11px; }
   .dialog-inner > .dialog-stack { font-size: 9px; }
+}
+
+@media (max-width: 640px) {
+  .plate:not(.about-plate)::after { left: var(--thread-end-small); width: max(1px, var(--thread-width-small)); background: var(--thread-color-small); }
 }
 
 @media (max-width: 380px) {

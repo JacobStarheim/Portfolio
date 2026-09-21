@@ -9,7 +9,21 @@
 - Checked the mobile menu, art-only toggle, project dialogs, Escape dismissal, focus return and contact link destinations.
 - Full-width art preserves its square aspect ratio. On mobile, text cards flow below the art.
 
-## Additional project cards and automatic age
+## Four illustrated chapters (current version)
+
+- Replaced the paper-only inserts with four newly generated, square artworks: Traveller, Driver, IN5320 and the hobby-project introduction. All six original artwork files are unchanged.
+- Order: work experience, Traveller, Driver, education, IN5320, hobby introduction, Open BFME, AIpodcast, Chess, About. Desktop uses overlay cards; mobile moves the same cards below the art. All ten artworks remain in art-only mode.
+- Read the official Nimmo product description and the IN5320 project source before developing the motifs. Exact generation and correction prompts, sources and backend-model caveat are linked from `artwork-prompts.md`.
+- Each new asset has 1254 px and 640 px WebP versions. The four pairs total approximately 2.18 MiB; they are lazy-loaded after the original hero.
+- Measured both resolutions of all ten artworks at their actual canvas edges. Responsive SVG ribbons join positions, tangents, widths and colors; mobile continuations behind the cards share the same measurements.
+- Browser checks at widths 320, 390, 640, 641, 760, 761, 1024 and 1280 found no horizontal overflow or out-of-bounds cards. All ten images loaded and switched to the small variants at 640 px.
+- Visually inspected each new desktop card and the mobile Traveller-to-Driver transition. All nine art-only joins have zero layout gap on both sides. Art-only checks at 390, 761 and 1280 show ten artworks, nine joins and no visible notes.
+- Tested the original NIMMO and education detail buttons and the new IN5320 detail button. The four verified app-store URLs are preserved, alongside the portrait, automatic age and GitHub calendar. Browser console reported no warnings or errors during these checks.
+- Production build, TypeScript, ESLint, all 29 unit tests and `git diff --check` passed. Eleven new tests cover thread geometry, tapering, responsive measurements and mobile continuations.
+
+## Additional project cards and automatic age (earlier iteration)
+
+The paper-only presentation below was superseded by the four illustrated chapters above; its age and app-store work remains.
 
 - Added individual Nimmo (Traveller) and Nimmo Driver cards after work experience, a separate IN5320 card after education, and a hobby-project introduction before Open BFME.
 - Verified all four store destinations against official Nimmo and app-store pages: Apple IDs `1672565306` and `6748903380`, Android packages `no.nimmo.app` and `no.nimmo.driver`.

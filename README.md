@@ -1,6 +1,6 @@
 # Jacob Starheim — En rød tråd
 
-En personlig portefølje der arbeid, utdanning og interesser møtes i et sammenhengende kunstgalleri. Seks gravyrpregede illustrasjoner bindes sammen av en rød tråd, med prosjektkort som forteller historiene underveis.
+En personlig portefølje der arbeid, utdanning og interesser møtes i et sammenhengende kunstgalleri. Ti gravyrpregede illustrasjoner bindes sammen av en rød tråd, med prosjektkort som forteller historiene underveis.
 
 [Besøk nettsiden](https://jacobstarheim.vercel.app) · [Forhåndsvisning av arbeidsgrenen](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app) · [LinkedIn](https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/)
 
@@ -8,10 +8,14 @@ En personlig portefølje der arbeid, utdanning og interesser møtes i et sammenh
 
 ## Om porteføljen
 
-Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukeropplevelser og utforskende prosjekter. Innholdet er på norsk og fordelt på seks kapitler:
+Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukeropplevelser og utforskende prosjekter. Innholdet er på norsk og følger ti kapitler:
 
 - **NIMMO:** arbeid med Flutter-appene Traveller og Driver, innlogging, tilgjengelighet og feilsøking.
-- **Utdanning:** bachelor fra UiO, 30 studiepoeng enkeltemner på masternivå og pågående master ved USN. IN5320-prosjektet har en egen prosjektvisning.
+- **Nimmo (Traveller):** passasjerappen, illustrert som reisen mellom hjem, hentested og fritidsaktiviteter.
+- **Nimmo Driver:** sjåførens oversikt over rute, stopp og passasjerer, sett fra et gravert førerhus.
+- **Utdanning:** bachelor fra UiO, 30 studiepoeng enkeltemner på masternivå og pågående master ved USN.
+- **IN5320:** skoleinspeksjoner og analyse av ressurser, illustrert med skoler, observasjoner og fysiske diagramplater.
+- **Hobbyprosjekter:** et felles idéverksted som innleder de tre neste prosjektene.
 - **Open BFME:** bidrag til åpne C++-prosjekter som rekonstruerer spillkode.
 - **AIpodcast:** en prototype for spørsmål til podkaster med sporbare lydkilder.
 - **Sjakk:** et analyseverktøy med motorintegrasjon og bildeimport av stillinger.
@@ -19,7 +23,9 @@ Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukerop
 
 På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flyttes kortene under bildene. «Bare kunsten» skjuler tekstlagene, og prosjektknappene åpner utdypende beskrivelser.
 
-Mellom kunstbildene ligger egne kort for Nimmo (Traveller), Nimmo Driver og IN5320, fulgt av en introduksjon til hobbyprosjektene. Appkortene lenker til de offisielle appene i App Store og Google Play. De opprinnelige detaljknappene for NIMMO og IN5320 er beholdt. De ekstra kortene skjules også i «Bare kunsten», slik at tråden fortsatt binder kunstbildene sammen.
+Traveller, Driver, IN5320 og hobbyintroduksjonen har egne genererte kunstbilder i samme visuelle stil som de seks opprinnelige bildene. Appkortene lenker til de offisielle appene i App Store og Google Play. De opprinnelige detaljknappene for NIMMO og IN5320 er beholdt. Alle ti bilder og forbindelsene mellom dem vises også i «Bare kunsten»; bare tekstlagene skjules.
+
+Overgangene tilpasses den røde trådens målte posisjon, retning, farge og tykkelse ved bildekantene. På mobil fortsetter tråden bak kortene under hvert bilde.
 
 Alderen i «Om meg» beregnes i nettleseren fra fødselsdatoen 7. november 2001, etter norsk dato (`Europe/Oslo`). Den oppdateres automatisk, også når en åpen fane får fokus igjen. Statisk HTML lagrer ikke en alder som kan bli foreldet; siden trenger ingen årlig publisering.
 
@@ -61,7 +67,7 @@ npm run dev
 | `npm run dev` | Start utviklingsserveren. |
 | `npm run typecheck` | Kontroller TypeScript-typer. |
 | `npm run lint` | Kjør ESLint uten tillatte advarsler. |
-| `npm test` | Test automatisk alder, datavalidering og kalenderlayout uten nettverk. |
+| `npm test` | Test automatisk alder, trådgeometri, datavalidering og kalenderlayout uten nettverk. |
 | `npm run build` | Lag et produksjonsbygg og eksporter til `out/`. |
 | `npm start` | Server det ferdige bygget fra `out/` på port 3000. |
 
@@ -70,8 +76,7 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 ## Hvor innholdet ligger
 
 - [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
-- [src/components/project-cards.tsx](src/components/project-cards.tsx) — egne appkort, IN5320 og introduksjon til hobbyprosjekter.
-- [src/styles/project-cards.css](src/styles/project-cards.css) — responsive prosjektkort og overganger mellom kunstbildene.
+- [src/components/art-thread.tsx](src/components/art-thread.tsx) og [src/lib/art-thread.ts](src/lib/art-thread.ts) — forbindelser mellom kunstbildenes målte trådender.
 - [src/components/age.tsx](src/components/age.tsx) og [src/lib/age.ts](src/lib/age.ts) — alder som oppdateres automatisk etter norsk dato.
 - [src/components/github-calendar.tsx](src/components/github-calendar.tsx) — GitHub-kalender, henting, feilvisning og tastaturbetjening.
 - [src/lib/github-contributions.ts](src/lib/github-contributions.ts) — validering og datobasert kalenderlayout.
@@ -82,21 +87,28 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 - [public/art/](public/art/) — nettoptimaliserte illustrasjoner.
 - [public/jacob-starheim.jpeg](public/jacob-starheim.jpeg) — originalt portrettfoto, vist i «Om meg».
 - [scripts/prepare-art.mjs](scripts/prepare-art.mjs) — størrelsestilpasning og WebP-komprimering.
+- [scripts/measure-art-threads.mjs](scripts/measure-art-threads.mjs) — leser trådens posisjon, retning, farge og tykkelse ved bildekantene uten å endre bildene.
 - [docs/artwork-prompts.md](docs/artwork-prompts.md) — genereringsprompter for kunstbildene.
 
 ## Kunst og visuell retning
 
-Illustrasjonene er AI-generert med OpenAIs bildeverktøy. Sjakkmotivet ble brukt som stilreferanse for resten av serien: mørke blågrønne toner, elfenbensfarget strek og en rød tråd gjennom alle kapitlene. Tekst og interaktive kort er HTML, ikke en del av bildene.
+Illustrasjonene er AI-generert med OpenAIs innebygde bildeverktøy. Verktøyet eksponerer ikke modellvalg eller verifiserbar modellidentitet, så ingen bestemt modellversjon tilskrives bildene. Sjakkmotivet og den eksisterende serien danner stilreferansen: mørke blågrønne toner, elfenbensfarget strek og en rød tråd gjennom alle kapitlene. Tekst og interaktive kort er HTML, ikke en del av bildene. Nimmo-nettsiden og prosjektkoden brukes til å forstå motivene, ikke som visuelle maler.
 
 Visuell inspirasjon: [kind av Kengo Works](https://www.kengoworks.com/kind).
 
-De ferdige WebP-bildene følger med repoet. Originale PNG-filer oppbevares separat og er bare nødvendige dersom nettversjonene skal genereres på nytt. Legg `nimmo.png`, `education.png`, `bfme.png`, `podcast.png`, `chess.png` og `about.png` i samme mappe, og kjør fra prosjektroten:
+De ferdige WebP-bildene følger med repoet. Originale PNG-filer oppbevares separat og er bare nødvendige dersom nettversjonene skal genereres på nytt. For hele serien legges `nimmo.png`, `traveller.png`, `driver.png`, `education.png`, `in5320.png`, `hobbies.png`, `bfme.png`, `podcast.png`, `chess.png` og `about.png` i samme mappe. Kjør fra prosjektroten:
 
 ```sh
 node scripts/prepare-art.mjs /absolutt/sti/til/originaler
 ```
 
-Skriptet lager varianter med opptil 1254 og 640 piksler bredde i `public/art/`. Det endrer størrelse og komprimering, ikke motivene.
+Navn som ekstra argumenter begrenser behandlingen til utvalgte bilder, for eksempel de fire nye kapitlene:
+
+```sh
+node scripts/prepare-art.mjs /absolutt/sti/til/nye-originaler traveller driver in5320 hobbies
+```
+
+Skriptet lager varianter med opptil 1254 og 640 piksler bredde i `public/art/`. Det endrer størrelse og komprimering, ikke motivene. De seks eksisterende kunstbildene er beholdt uendret da de fire nye ble lagt til. Se [promptoversikten](docs/artwork-prompts.md) for motivgrunnlag og genereringshistorikk.
 
 ## Publisering med Vercel
 

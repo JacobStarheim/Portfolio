@@ -1,6 +1,5 @@
 @import "../styles/portfolio.css";
 @import "../styles/github-calendar.css";
-@import "../styles/project-cards.css";
 
 :root { --ink: #112224; --night: #101e20; --paper: #efe8d8; --muted: #aca996; --red: #cf4938; --font-serif: Georgia, "Times New Roman", serif; }
 * { box-sizing: border-box; }
@@ -12,9 +11,4 @@ button { cursor: pointer; color: inherit; }
 a { color: inherit; text-decoration: none; }
 button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--red); outline-offset: 6px; }
 ::selection { background: #bc483b; color: #fff5e0; }
-#arbeid { --thread-end: 52.67%; }
-#utdanning { --thread-end: 47.29%; }
-#open-bfme { --thread-end: 52.31%; }
-#aipodcast { --thread-end: 50.56%; }
-#sjakk { --thread-end: 52.27%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }

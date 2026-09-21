@@ -1,12 +1,27 @@
 # Kunstprompter
 
-Originale illustrasjoner laget med innebygd OpenAI-bildegenerering. Sjakkbildet ble godkjent av Jacob og brukt som stilreferanse for de fem neste. Tekst og interaksjon er separat HTML. Modellvariant/snapshot er ikke eksponert av verktøyet.
+Illustrasjonene er laget med innebygd OpenAI-bildegenerering. Sjakkbildet ble godkjent av Jacob og brukt som stilreferanse for den opprinnelige serien. Fire nye bilder viderefører samme graverte stil; de seks eksisterende bildene er uendret. Tekst og interaksjon er separat HTML. Verktøyet eksponerer verken modellvalg eller verifiserbar modellidentitet, så en bestemt modellvariant eller et bestemt snapshot kan ikke bekreftes.
+
+## Serien i visningsrekkefølge
+
+NIMMO arbeid → Traveller → Driver → Utdanning → IN5320 → Hobbyprosjekter → Open BFME → AIpodcast → Sjakk → Om meg.
+
+De fire nye kapitlene har separate prompt- og kildenotater:
+
+- [Traveller](art-traveller-prompt.md): delt reise fra hjem til aktivitet, med hentested, passasjerer og et nordisk lokalsamfunn.
+- [Driver](art-driver-prompt.md): sjåførens perspektiv, rute og hentestopp gjennom et gravert førerhus.
+- [IN5320](art-in5320-prompt.md): skoleobservasjoner og ressursdata som blir til sammenlignbar innsikt, basert på analysemodulen i prosjektet.
+- [Hobbyintroduksjon](art-hobbies-prompt.md): et sammenhengende verksted med arkitekturmodell, sjakkbrikke og lydapparat som innleder de personlige prosjektene.
+
+Nimmo-kildene brukes for produktforståelse, ikke som designreferanse. IN5320-motivet bruker oppdiktede, umerkede diagrammer; ingen faktiske inspeksjonsdata eller innloggingsopplysninger ble sendt til bildegenereringen. Alle ti kunstbilder er synlige i «Bare kunsten». Overgangene i nettsiden følger de målte røde trådendene i rasterbildene, også når mobilkortene ligger under bildene.
+
+Nettoptimaliserte filer ligger i `public/art/`. De fire nye motivene heter `traveller.webp`, `driver.webp`, `in5320.webp` og `hobbies.webp`, med tilsvarende `-640.webp`-varianter. De fullstendige promptene for den opprinnelige serien følger nedenfor.
 
 # Chess — stilprøve 1
 
 Generert 21. september 2026 med det innebygde bildeverktøyet. Modellvariant/snapshot er ikke eksponert av verktøyet.
 
-Status: stilprøve til brukerens vurdering, ikke godkjent produksjonsasset.
+Status: opprinnelig stilprøve, senere godkjent som produksjonsbilde og stilreferanse.
 
 Bilde brukt i nettstedet: `public/art/chess.webp`.
 
