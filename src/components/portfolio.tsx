@@ -250,6 +250,10 @@ export default function Portfolio() {
       <section className="plate about-plate" id="om-meg" aria-label="Om meg og kontakt">
         <Chapter number="06" title="DET SOM BETYR NOE" />
         <Art name="about" alt="To tomme trestoler under et gammelt tre, vendt mot en solfylt fjord. Den røde tråden ender stille mellom stolene." />
+        <figure className="about-portrait annotation">
+          <picture><img src="/jacob-starheim.jpeg" alt="Portrett av Jacob Vindal Starheim" width={800} height={600} loading="lazy" decoding="async" /></picture>
+          <figcaption>Jacob Vindal Starheim</figcaption>
+        </figure>
         <Card number="06" category="OM MEG" title="Det er mer enn kode.">
           <p>Jeg er Jacob Vindal Starheim. Utvikler, masterstudent og glad i sjakk, gode spørsmål og å forstå hvordan ting virker.</p>
           <p>Jeg er gift og liker å tilbringe tid med kona mi, venner og familie. På fritiden spiller jeg også gjerne videospill.</p>

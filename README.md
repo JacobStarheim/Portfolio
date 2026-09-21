@@ -15,7 +15,7 @@ Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukerop
 - **Open BFME:** bidrag til åpne C++-prosjekter som rekonstruerer spillkode.
 - **AIpodcast:** en prototype for spørsmål til podkaster med sporbare lydkilder.
 - **Sjakk:** et analyseverktøy med motorintegrasjon og bildeimport av stillinger.
-- **Om meg:** interesser, livet utenfor koden og kontaktlenker.
+- **Om meg:** portrett, interesser, livet utenfor koden og kontaktlenker.
 
 På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flyttes kortene under bildene. «Bare kunsten» skjuler tekstlagene, og prosjektknappene åpner utdypende beskrivelser.
 
@@ -73,6 +73,7 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 - [src/app/globals.css](src/app/globals.css) — globale stiler, fokusmarkeringer og redusert bevegelse.
 - [src/app/layout.tsx](src/app/layout.tsx) — språk, fonter og delingsmetadata.
 - [public/art/](public/art/) — nettoptimaliserte illustrasjoner.
+- [public/jacob-starheim.jpeg](public/jacob-starheim.jpeg) — originalt portrettfoto, vist i «Om meg».
 - [scripts/prepare-art.mjs](scripts/prepare-art.mjs) — størrelsestilpasning og WebP-komprimering.
 - [docs/artwork-prompts.md](docs/artwork-prompts.md) — genereringsprompter for kunstbildene.
 

@@ -349,6 +349,22 @@
 .education-list > div + div { margin-top: 20px; padding-top: 18px; border-top: 1px solid #cbc9b6; }
 .education-list h3 { margin: 7px 0 5px; font-size: 14px; font-weight: 550; letter-spacing: -.02em; line-height: 1.45; }
 .education-list p { margin: 0; color: #46514a; font-size: 11px; line-height: 1.7; }
+.about-portrait {
+  position: absolute;
+  z-index: 3;
+  top: 12%;
+  right: 7%;
+  width: clamp(210px, 24vw, 340px);
+  margin: 0;
+  padding: 10px 10px 0;
+  border: 1px solid #d7d0be;
+  background: var(--paper);
+  box-shadow: 0 12px 35px rgb(6 16 16 / 22%);
+  transform: rotate(1.5deg);
+}
+.about-portrait picture, .about-portrait img { display: block; width: 100%; }
+.about-portrait img { height: auto; aspect-ratio: 4 / 3; }
+.about-portrait figcaption { padding: 14px 4px; color: #536056; font-family: var(--font-geist-mono), monospace; font-size: 9px; letter-spacing: .06em; line-height: 1.6; }
 .contact-links { display: grid; margin-top: 25px; border-top: 1px solid #c7c5b1; }
 
 .contact-links a {
@@ -491,6 +507,7 @@
   .education-list > div + div { margin-top: 21px; padding-top: 18px; }
   .education-list h3 { font-size: 14px; }
   .education-list p { font-size: 12px; }
+  .about-portrait { position: relative; inset: auto; width: min(260px, calc(100% - 64px)); margin: -42px 28px 38px auto; }
   .contact-links { margin-top: 24px; }
   .contact-links a { min-height: 51px; font-size: 12px; }
   .email-address { font-size: 9px; }
