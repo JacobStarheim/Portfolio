@@ -25,7 +25,7 @@ På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flytt
 
 Traveller, Driver, IN5320 og hobbyintroduksjonen har egne genererte kunstbilder i samme visuelle stil som de seks opprinnelige bildene. Appkortene lenker til de offisielle appene i App Store og Google Play. De opprinnelige detaljknappene for NIMMO og IN5320 er beholdt. Alle ti bilder og forbindelsene mellom dem vises også i «Bare kunsten»; bare tekstlagene skjules.
 
-Overgangene tilpasses den røde trådens målte posisjon, retning, farge og tykkelse ved bildekantene. På mobil fortsetter tråden bak kortene under hvert bilde.
+Overgangene bruker en generert trådtekstur med fibre og lys/skygge, bøyd langs en kurve mellom bildekantene. Små teksturprøver fra tråden i hvert kunstbilde brukes i skjøtene, mens målt posisjon, retning og tykkelse holder forbindelsene på plass. På mobil fortsetter samme materiale bak kortene under hvert bilde. Se [materialprompten](docs/thread-material-prompt.md).
 
 Alderen i «Om meg» beregnes i nettleseren fra fødselsdatoen 7. november 2001, etter norsk dato (`Europe/Oslo`). Den oppdateres automatisk, også når en åpen fane får fokus igjen. Statisk HTML lagrer ikke en alder som kan bli foreldet; siden trenger ingen årlig publisering.
 
@@ -77,6 +77,7 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 
 - [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
 - [src/components/art-thread.tsx](src/components/art-thread.tsx) og [src/lib/art-thread.ts](src/lib/art-thread.ts) — forbindelser mellom kunstbildenes målte trådender.
+- [src/lib/thread-material.ts](src/lib/thread-material.ts) — rastermateriale og blanding mot teksturprøvene fra bildene.
 - [src/components/age.tsx](src/components/age.tsx) og [src/lib/age.ts](src/lib/age.ts) — alder som oppdateres automatisk etter norsk dato.
 - [src/components/github-calendar.tsx](src/components/github-calendar.tsx) — GitHub-kalender, henting, feilvisning og tastaturbetjening.
 - [src/lib/github-contributions.ts](src/lib/github-contributions.ts) — validering og datobasert kalenderlayout.
@@ -88,6 +89,8 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 - [public/jacob-starheim.jpeg](public/jacob-starheim.jpeg) — originalt portrettfoto, vist i «Om meg».
 - [scripts/prepare-art.mjs](scripts/prepare-art.mjs) — størrelsestilpasning og WebP-komprimering.
 - [scripts/measure-art-threads.mjs](scripts/measure-art-threads.mjs) — leser trådens posisjon, retning, farge og tykkelse ved bildekantene uten å endre bildene.
+- [scripts/prepare-thread-material.mjs](scripts/prepare-thread-material.mjs) — lossless materialbeskjæring og små fargeprøver fra bildekantene til nettleseren.
+- [scripts/preview-thread-material.mjs](scripts/preview-thread-material.mjs) — lokal 3× sammenligning av gammel og ny tråd, kjøres etter bygging; publiseres ikke som en side.
 - [docs/artwork-prompts.md](docs/artwork-prompts.md) — genereringsprompter for kunstbildene.
 
 ## Kunst og visuell retning

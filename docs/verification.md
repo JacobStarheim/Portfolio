@@ -9,7 +9,17 @@
 - Checked the mobile menu, art-only toggle, project dialogs, Escape dismissal, focus return and contact link destinations.
 - Full-width art preserves its square aspect ratio. On mobile, text cards flow below the art.
 
-## Four illustrated chapters (current version)
+## Textured thread transitions (current version)
+
+- Replaced all nine flat SVG gradient ribbons and nine solid mobile continuation bars with the same generated raster cord material. The ten chapter artworks, content, cards and store URLs are unchanged.
+- Generated a real fiber/twist/shading asset through the built-in image tool. An initial fake-checkerboard output was rejected and corrected with another image-generation edit. The selected opaque dark-matte asset is softly keyed in the renderer; no checkerboard or rectangular matte is shown.
+- Each bridge follows the measured geometry but samples actual pixels from the generated material. Tiny border profiles from both responsive versions of the artworks blend into the material at the seams. Premultiplied sampling avoids dark fringes; one shared RGB contrast gain avoids pale or greenish fibers.
+- Compared the old and new Traveller-to-Driver seam side by side at 3× magnification using `scripts/preview-thread-material.mjs`. Also visually inspected NIMMO-to-Traveller, Driver-to-Education and Chess-to-About at magnification. The local-only proof uses the production renderer and original art pixels; its generated files stay under ignored `out/` and are not part of the site deployment.
+- Browser checks at 320, 390, 640, 641, 760, 761 and 1280 CSS pixels showed all nine raster connectors ready, no horizontal overflow and no out-of-bounds cards. At mobile sizes all nine continuations rendered, with zero gaps from actual image bottoms to section bottoms (including the opening intro). Continuations hide on desktop and in art-only mode.
+- Art-only mobile check preserves all ten artworks and all nine connectors. Browser console returned no errors or warnings.
+- Production build, TypeScript, ESLint and all 38 unit tests passed. Nine material tests cover soft alpha, actual edge profiles, arc-length sampling, seam colors, bounded transparent canvases and red-highlight calibration.
+
+## Four illustrated chapters (previous transition material)
 
 - Replaced the paper-only inserts with four newly generated, square artworks: Traveller, Driver, IN5320 and the hobby-project introduction. All six original artwork files are unchanged.
 - Order: work experience, Traveller, Driver, education, IN5320, hobby introduction, Open BFME, AIpodcast, Chess, About. Desktop uses overlay cards; mobile moves the same cards below the art. All ten artworks remain in art-only mode.

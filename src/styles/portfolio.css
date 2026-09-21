@@ -341,8 +341,8 @@
   letter-spacing: .12em;
 }
 
-.interlude svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.interlude path { stroke: none; }
+.thread-canvas { position: absolute; pointer-events: none; }
+.thread-continuation { display: none; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .interlude-label, .interlude-note { position: relative; z-index: 1; }
 
 .app-store-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 23px; }
@@ -485,8 +485,8 @@
   .navigation a:last-child { border-bottom: 0; }
   .gallery { padding: 14px 14px 0; }
   .plate { scroll-margin-top: 86px; }
-  .plate:not(.about-plate)::after { position: absolute; z-index: 0; inset: 0 auto 0 var(--thread-end); width: max(1px, var(--thread-width)); transform: translateX(-50%); background: var(--thread-color); content: ""; pointer-events: none; }
-  .art-only .plate::after { display: none; }
+  .thread-continuation { display: block; }
+  .art-only .thread-continuation { display: none; }
   .artwork { position: relative; z-index: 1; }
   .hero-intro { position: relative; inset: auto; width: auto; padding: 36px 14px 43px; background: var(--night); text-shadow: none; }
   .hero-intro .eyebrow { gap: 8px; font-size: clamp(7px, 1.8vw, 10px); letter-spacing: .055em; }
@@ -537,10 +537,6 @@
   .dialog-links { flex-direction: column; align-items: flex-start; }
   .dialog-links .text-link { font-size: 11px; }
   .dialog-inner > .dialog-stack { font-size: 9px; }
-}
-
-@media (max-width: 640px) {
-  .plate:not(.about-plate)::after { left: var(--thread-end-small); width: max(1px, var(--thread-width-small)); background: var(--thread-color-small); }
 }
 
 @media (max-width: 380px) {
