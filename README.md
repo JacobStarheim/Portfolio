@@ -1,70 +1,98 @@
 # Jacob Starheim — En rød tråd
 
-En kunstnerisk, norskspråklig portefølje for Jacob Vindal Starheim. Seks AI-genererte, gravyrpregede kunstmotiver knyttes sammen av en rød tråd: NIMMO, utdanning, Open BFME, AIpodcast, sjakk og livet utenfor koden.
+En personlig portefølje der arbeid, utdanning og interesser møtes i et sammenhengende kunstgalleri. Seks gravyrpregede illustrasjoner bindes sammen av en rød tråd, med prosjektkort som forteller historiene underveis.
 
-Bygget med Next.js, React og TypeScript. Statisk eksport: ingen database, API-nøkler, chat eller kontaktskjema. Kontakt skjer via e-post, LinkedIn og GitHub.
+[Besøk nettsiden](https://jacobstarheim.vercel.app) · [Forhåndsvisning av arbeidsgrenen](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app) · [LinkedIn](https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/)
+
+<img src="public/art/nimmo.webp" alt="Et gravert kystlandskap med en telefonformet portal og en gjennomgående rød tråd." width="720" />
+
+## Om porteføljen
+
+Nettsiden presenterer Jacob Vindal Starheims arbeid med mobilutvikling, brukeropplevelser og utforskende prosjekter. Innholdet er på norsk og fordelt på seks kapitler:
+
+- **NIMMO:** arbeid med Flutter-appene Traveller og Driver, innlogging, tilgjengelighet og feilsøking.
+- **Utdanning:** bachelor fra UiO, 30 studiepoeng enkeltemner på masternivå og pågående master ved USN. IN5320-prosjektet har en egen prosjektvisning.
+- **Open BFME:** bidrag til åpne C++-prosjekter som rekonstruerer spillkode.
+- **AIpodcast:** en prototype for spørsmål til podkaster med sporbare lydkilder.
+- **Sjakk:** et analyseverktøy med motorintegrasjon og bildeimport av stillinger.
+- **Om meg:** interesser, livet utenfor koden og kontaktlenker.
+
+På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flyttes kortene under bildene. «Bare kunsten» skjuler tekstlagene, og prosjektknappene åpner utdypende beskrivelser.
+
+## Teknologi og tilgjengelighet
+
+- Next.js 16, React 19 og TypeScript, med statisk eksport.
+- Vanlig CSS, lokale Geist-fonter og responsive WebP-bilder.
+- Native HTML-dialoger med tastaturbetjening, Escape-lukking og tilbakeføring av fokus.
+- Hopp-til-innhold-lenke, synlige fokusmarkeringer, alternativ tekst og støtte for redusert bevegelse.
+- Ingen database, backend-tjeneste eller API-nøkkel er nødvendig for å kjøre porteføljen. Kontaktlenkene går direkte til e-post, LinkedIn og GitHub.
 
 ## Kjør lokalt
 
+Bruk Node.js 24 for å matche byggemiljøet på Vercel, samt npm. Den nye porteføljen ligger foreløpig på grenen `codex/art-portfolio`:
+
 ```sh
+git clone --branch codex/art-portfolio https://github.com/JacobStarheim/Portfolio.git
+cd Portfolio
 npm ci
 npm run dev
 ```
 
-## Kontroller og produksjonsbygg
+Åpne [localhost:3000](http://localhost:3000). Ingen `.env`-fil er nødvendig for lokal utvikling.
 
-```sh
-npm run typecheck
-npm run lint
-npm run build
-npm start
-```
+### Kommandoer
 
-`npm run build` eksporterer til `out/`. `npm start` serverer denne mappen på port 3000. Ikke bruk `next start` for statisk eksport.
+| Kommando | Formål |
+| --- | --- |
+| `npm run dev` | Start utviklingsserveren. |
+| `npm run typecheck` | Kontroller TypeScript-typer. |
+| `npm run lint` | Kjør ESLint uten tillatte advarsler. |
+| `npm run build` | Lag et produksjonsbygg og eksporter til `out/`. |
+| `npm start` | Server det ferdige bygget fra `out/` på port 3000. |
 
-## Innhold og design
+Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `next start` skal ikke brukes.
 
-- `src/components/portfolio.tsx`: innhold, prosjektvisninger, kontaktlenker og tilgjengelig meny/dialog.
-- `src/styles/portfolio.css`: gallerilayout, kort, mobilvisning og reduserte animasjoner.
-- `src/app/layout.tsx`: metadata og lokale fonter.
-- `public/art/`: ferdige WebP-bilder, 1254 px og 640 px, uten tekst.
-- `docs/artwork-prompts.md`: eksakte genereringsprompter.
+## Hvor innholdet ligger
 
-Desktop viser hele bildene i sidebredden med tekstkort oppå. På mobil vises hele bildet og deretter kortet, uten å skjule motivet. «Bare kunsten» skjuler tekstlagene. Prosjektdetaljer vises i en tastaturtilgjengelig, innebygd dialog.
+- [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
+- [src/styles/portfolio.css](src/styles/portfolio.css) — layout, kunstgalleri, tekstkort og mobilvisning.
+- [src/app/globals.css](src/app/globals.css) — globale stiler, fokusmarkeringer og redusert bevegelse.
+- [src/app/layout.tsx](src/app/layout.tsx) — språk, fonter og delingsmetadata.
+- [public/art/](public/art/) — nettoptimaliserte illustrasjoner.
+- [scripts/prepare-art.mjs](scripts/prepare-art.mjs) — størrelsestilpasning og WebP-komprimering.
+- [docs/artwork-prompts.md](docs/artwork-prompts.md) — genereringsprompter for kunstbildene.
 
-## Generering av kunst
+## Kunst og visuell retning
 
-Bildene ble laget med det innebygde OpenAI-bildeverktøyet. Den godkjente sjakkillustrasjonen ble brukt som stilreferanse for de fem øvrige motivene. Verktøyet eksponerte ikke eksakt modellvariant eller snapshot; ikke anta at en bestemt API-variant ble valgt.
+Illustrasjonene er AI-generert med OpenAIs bildeverktøy. Sjakkmotivet ble brukt som stilreferanse for resten av serien: mørke blågrønne toner, elfenbensfarget strek og en rød tråd gjennom alle kapitlene. Tekst og interaktive kort er HTML, ikke en del av bildene.
 
-Originale PNG-filer oppbevares separat fra nettsiderepoet. For å lage nye nettversjoner fra en mappe med `nimmo.png`, `education.png`, `bfme.png`, `podcast.png`, `chess.png` og `about.png`:
+Visuell inspirasjon: [kind av Kengo Works](https://www.kengoworks.com/kind).
+
+De ferdige WebP-bildene følger med repoet. Originale PNG-filer oppbevares separat og er bare nødvendige dersom nettversjonene skal genereres på nytt. Legg `nimmo.png`, `education.png`, `bfme.png`, `podcast.png`, `chess.png` og `about.png` i samme mappe, og kjør fra prosjektroten:
 
 ```sh
 node scripts/prepare-art.mjs /absolutt/sti/til/originaler
 ```
 
-Skriptet endrer bare størrelse og komprimeringsformat, ikke motivet.
+Skriptet lager varianter med opptil 1254 og 640 piksler bredde i `public/art/`. Det endrer størrelse og komprimering, ikke motivene.
 
-## Publisering
+## Publisering med Vercel
 
-Vercel-prosjekt: `jacobstarheim`, under `jacobs-projects-deb8c182`. Bruk en forhåndsvisning før produksjon:
+Vercel-prosjektet `jacobstarheim` er koblet til dette GitHub-repoet. Automatisk bygging fra en push til arbeidsgrenen er verifisert.
 
-```sh
-npx vercel deploy -y
-```
+- **`codex/art-portfolio`:** pushes bygger en forhåndsvisning på [arbeidsgrenens faste adresse](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app).
+- **`main`:** produksjonsgrenen. Pushes eller merges hit kan oppdatere [jacobstarheim.vercel.app](https://jacobstarheim.vercel.app).
 
-GitHub-koblingen til `JacobStarheim/Portfolio` er aktiv i Vercel. Arbeidsgrenen for den nye porteføljen er `codex/art-portfolio`: pushes til denne grenen oppretter forhåndsvisninger. Produksjonsgrenen er `main`; en push eller merge dit kan oppdatere den offentlige siden. Ikke merge før versjonen er godkjent.
+Den nye porteføljen er ennå ikke merget til `main`. Den offentlige førsteversjonen ble publisert separat; videre endringer gjennomgås i forhåndsvisningen før de merges. Når grenen er merget, bør klonekommandoen over oppdateres til standardgrenen.
 
-Den første CLI-publiseringen ble automatisk satt til produksjon av Vercel, selv med `--target preview`. Siden finnes på https://jacobstarheim.vercel.app. For videre arbeid brukes Git-forhåndsvisninger på arbeidsgrenen; verifiser alltid miljø og byggestatus før en lenke deles. Ikke opprett prosjektet på nytt for å teste forhåndsvisninger.
+Vercel bygger fra kildekoden. `VERCEL_URL` brukes til delingsmetadata, og `VERCEL_ENV` styrer om siden kan indekseres: forhåndsvisninger og lokale bygg får `noindex`. Ikke last opp en lokal `out/` med localhost-metadata som et ferdig produksjonsbygg.
 
-Vercel-forhåndsvisninger er merket `noindex`; produksjonsbygg kan indekseres. `VERCEL_URL` brukes som basis for delingsmetadata ved bygg på Vercel. Bygg fra kildekoden på Vercel, ikke last opp en lokal `out/` med localhost-metadata. `.env*` og lokal Vercel-autentisering skal verken pushes eller lastes opp.
+`.env*` og lokal Vercel-autentisering skal ikke legges i Git eller lastes opp som kildefiler. Se [verifikasjonsnotatene](docs/verification.md) for tester og oppsetthistorikk.
 
-## Vedlikehold av faktainnhold
+## Kontakt
 
-- NIMMO-stillingen er deltid, startet 10. juni 2025. Teksten står som pågående per september 2026. Oppdater til avsluttet periode etter planlagt siste arbeidsdag 18. oktober 2026.
-- UiO-bachelor: august 2022–juni 2025.
-- 30 studiepoeng enkeltemner på masternivå ved UiO, inkludert IN5320 med A. Dette omtales ikke som en fullført mastergrad.
-- USN-master: pågående fra august 2026, forventet fullføring juni 2028.
-- Gruppeprosjekter, upstream-bidrag og personlige prototyper er skilt fra hverandre. Ingen påstander om arbeidseffekt basert på kodevolum.
-- Intern NIMMO-dokumentasjon, private repoer, innloggingsopplysninger og personlige medier er ikke publisert.
+[LinkedIn](https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/) · [GitHub](https://github.com/JacobStarheim) · [jacobvinstar@gmail.com](mailto:jacobvinstar@gmail.com)
 
-Visuell inspirasjon: [kind av Kengo Works](https://www.kengoworks.com/kind). Illustrasjonene er originale og ikke kopiert fra referansen.
+## Lisens
+
+Se [MIT-lisensen](LICENSE) som følger med repoet.
