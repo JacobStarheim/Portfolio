@@ -1,38 +1,68 @@
-# Portfolio
-Welcome to my portfolio website, built with Next.js and TypeScript to ensure a robust and scalable architecture. Styled using Tailwind CSS, the site offers a responsive design complemented by an interactive AI chatbot using OpenAI's API to learn more about me. Additionally, I have integrated EmailJS for seamless contact form functionality.
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jacob Starheim — En rød tråd
 
-## Getting Started
+En kunstnerisk, norskspråklig portefølje for Jacob Vindal Starheim. Seks AI-genererte, gravyrpregede kunstmotiver knyttes sammen av en rød tråd: NIMMO, utdanning, Open BFME, AIpodcast, sjakk og livet utenfor koden.
 
-First, run the development server:
+Bygget med Next.js, React og TypeScript. Statisk eksport: ingen database, API-nøkler, chat eller kontaktskjema. Kontakt skjer via e-post, LinkedIn og GitHub.
 
-```bash
+## Kjør lokalt
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Kontroller og produksjonsbygg
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run typecheck
+npm run lint
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`npm run build` eksporterer til `out/`. `npm start` serverer denne mappen på port 3000. Ikke bruk `next start` for statisk eksport.
 
-## Learn More
+## Innhold og design
 
-To learn more about Next.js, take a look at the following resources:
+- `src/components/portfolio.tsx`: innhold, prosjektvisninger, kontaktlenker og tilgjengelig meny/dialog.
+- `src/styles/portfolio.css`: gallerilayout, kort, mobilvisning og reduserte animasjoner.
+- `src/app/layout.tsx`: metadata og lokale fonter.
+- `public/art/`: ferdige WebP-bilder, 1254 px og 640 px, uten tekst.
+- `docs/artwork-prompts.md`: eksakte genereringsprompter.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Desktop viser hele bildene i sidebredden med tekstkort oppå. På mobil vises hele bildet og deretter kortet, uten å skjule motivet. «Bare kunsten» skjuler tekstlagene. Prosjektdetaljer vises i en tastaturtilgjengelig, innebygd dialog.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Generering av kunst
 
-## Deploy on Vercel
+Bildene ble laget med det innebygde OpenAI-bildeverktøyet. Den godkjente sjakkillustrasjonen ble brukt som stilreferanse for de fem øvrige motivene. Verktøyet eksponerte ikke eksakt modellvariant eller snapshot; ikke anta at en bestemt API-variant ble valgt.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Originale PNG-filer oppbevares separat fra nettsiderepoet. For å lage nye nettversjoner fra en mappe med `nimmo.png`, `education.png`, `bfme.png`, `podcast.png`, `chess.png` og `about.png`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+node scripts/prepare-art.mjs /absolutt/sti/til/originaler
+```
+
+Skriptet endrer bare størrelse og komprimeringsformat, ikke motivet.
+
+## Publisering
+
+Vercel-prosjekt: `jacobstarheim`, under `jacobs-projects-deb8c182`. Bruk en forhåndsvisning før produksjon:
+
+```sh
+npx vercel deploy -y
+```
+
+Arbeidsgrenen for den nye porteføljen er `codex/art-portfolio`. GitHub-koblingen til `JacobStarheim/Portfolio` må være aktiv i Vercel før pushes kan bygge automatisk. Med koblingen aktiv gir arbeidsgrener forhåndsvisninger; en push eller merge til produksjonsgrenen `main` kan publisere produksjon. Ikke merge før versjonen er godkjent.
+
+Vercel-forhåndsvisninger er merket `noindex`; produksjonsbygg kan indekseres. `VERCEL_URL` brukes som basis for delingsmetadata ved bygg på Vercel. Bygg fra kildekoden på Vercel, ikke last opp en lokal `out/` med localhost-metadata. `.env*` og lokal Vercel-autentisering skal verken pushes eller lastes opp.
+
+## Vedlikehold av faktainnhold
+
+- NIMMO-stillingen er deltid, startet 10. juni 2025. Teksten står som pågående per september 2026. Oppdater til avsluttet periode etter planlagt siste arbeidsdag 18. oktober 2026.
+- UiO-bachelor: august 2022–juni 2025.
+- 30 studiepoeng enkeltemner på masternivå ved UiO, inkludert IN5320 med A. Dette omtales ikke som en fullført mastergrad.
+- USN-master: pågående fra august 2026, forventet fullføring juni 2028.
+- Gruppeprosjekter, upstream-bidrag og personlige prototyper er skilt fra hverandre. Ingen påstander om arbeidseffekt basert på kodevolum.
+- Intern NIMMO-dokumentasjon, private repoer, innloggingsopplysninger og personlige medier er ikke publisert.
+
+Visuell inspirasjon: [kind av Kengo Works](https://www.kengoworks.com/kind). Illustrasjonene er originale og ikke kopiert fra referansen.
