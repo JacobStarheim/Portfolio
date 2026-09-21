@@ -13,7 +13,7 @@ De fire nye kapitlene har separate prompt- og kildenotater:
 - [IN5320](art-in5320-prompt.md): skoleobservasjoner og ressursdata som blir til sammenlignbar innsikt, basert på analysemodulen i prosjektet.
 - [Hobbyintroduksjon](art-hobbies-prompt.md): et sammenhengende verksted med arkitekturmodell, sjakkbrikke og lydapparat som innleder de personlige prosjektene.
 
-Tråden mellom kunstbildene bruker et eget [generert trådmateriale](thread-material-prompt.md), blandet mot teksturprøver fra bildekantene. Materialet erstatter de tidligere flate SVG-fargebåndene; kunstbildene selv er ikke endret.
+Tråden mellom kunstbildene viderefører strekens egne pikselprofiler fra bildekantene, med målt tykkelse, retning, farge og kantskygge. Et tidligere forsøk med [generert trådmateriale](thread-material-prompt.md) ble forkastet fordi det så ut som fysisk tau. Det brukes ikke lenger; kunstbildene selv er ikke endret.
 
 Nimmo-kildene brukes for produktforståelse, ikke som designreferanse. IN5320-motivet bruker oppdiktede, umerkede diagrammer; ingen faktiske inspeksjonsdata eller innloggingsopplysninger ble sendt til bildegenereringen. Alle ti kunstbilder er synlige i «Bare kunsten». Overgangene i nettsiden følger de målte røde trådendene i rasterbildene, også når mobilkortene ligger under bildene.
 

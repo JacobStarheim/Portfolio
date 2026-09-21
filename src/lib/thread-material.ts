@@ -1,6 +1,6 @@
-/** Raster-only thread rendering. Geometry supplies the route, never its appearance. */
+/** Continue the illustrated line using only pixels from its two artwork edges. */
 export type ThreadRaster = { width: number; height: number; data: ArrayLike<number> };
-export type ThreadProfile = { rows: number[][]; profileWidth?: number; span?: number };
+export type ThreadProfile = { rows: number[][]; profileWidth?: number; span?: number; matte?: [number, number, number] };
 export type ThreadProfiles = {
   version: number;
   profileWidth: number;
@@ -10,14 +10,13 @@ export type ThreadProfiles = {
 type Point = { x: number; y: number };
 export type RasterThreadGeometry = { centerline: Point[]; startWidth: number; endWidth: number };
 type Pixel = [number, number, number, number];
-export type PreparedThreadMaterial = ThreadRaster & { centers: number[]; widths: number[]; mean: Pixel };
 export type PreparedThreadProfile = ThreadRaster & { span: number; mean: Pixel };
 
 const clamp = (value: number, low = 0, high = 1) => Math.min(high, Math.max(low, value));
 const smooth = (value: number) => { const t = clamp(value); return t * t * (3 - 2 * t); };
 const mix = (a: number, b: number, amount: number) => a + (b - a) * amount;
 
-/** Soft red-chroma key keeps the cord's shadow/highlight detail and its fine fringe. */
+/** Separate the illustrated red stroke from its dark paper background. */
 export function threadAlpha(red: number, green: number, blue: number): number {
   return smooth((red - Math.max(green, blue) - 2) / 22);
 }
@@ -25,8 +24,7 @@ export function threadAlpha(red: number, green: number, blue: number): number {
 function isolatePixel(data: ArrayLike<number>, offset: number, matte: Pixel): Pixel {
   const alpha = threadAlpha(data[offset], data[offset + 1], data[offset + 2]) * data[offset + 3] / 255;
   if (alpha < 0.001) return [0, 0, 0, 0];
-  // Undo the source matte before compositing, preserving the fine fibres rather
-  // than giving their antialiased borders an artificial dark outline.
+  // Undo the source matte so the original soft edge is not darkened twice.
   return [
     clamp(matte[0] + (data[offset] - matte[0]) / alpha, 0, 255),
     clamp(matte[1] + (data[offset + 1] - matte[1]) / alpha, 0, 255),
@@ -53,29 +51,29 @@ function averagePixels(data: ArrayLike<number>, start = 0, end = data.length): P
   return result;
 }
 
-/** Prepare the one generated, straight cord once; individual bridges reuse it. */
-export function prepareThreadMaterial(raster: ThreadRaster): PreparedThreadMaterial {
-  if (raster.width < 2 || raster.height < 2 || raster.data.length !== raster.width * raster.height * 4) {
-    throw new Error("Thread material must contain a complete RGBA raster.");
+/** Keep the measured stroke and its complete connected antialiased fringe. */
+function isolateStrokeRun(data: Float32Array, row: number, width: number, span: number) {
+  const rowOffset = row * width * 4;
+  const center = (width - 1) / 2;
+  // The measured bright core is centered in the much wider source sample. Find
+  // its strongest pixel, not a warm paper fleck elsewhere in that sample.
+  const coreRadius = width / span / 2;
+  let seed = -1;
+  let strongest = 0;
+  for (let column = 0; column < width; column++) {
+    if (Math.abs(column - center) > Math.max(1, coreRadius)) continue;
+    const alpha = data[rowOffset + column * 4 + 3];
+    if (alpha > strongest) { seed = column; strongest = alpha; }
   }
-  const data = new Float32Array(raster.data.length);
-  const centers: number[] = [];
-  const widths: number[] = [];
-  for (let row = 0; row < raster.height; row++) {
-    const matte = rowMatte(raster, row);
-    let first = raster.width;
-    let last = -1;
-    for (let column = 0; column < raster.width; column++) {
-      const offset = (row * raster.width + column) * 4;
-      const pixel = isolatePixel(raster.data, offset, matte);
-      data.set(pixel, offset);
-      if (pixel[3] >= 160) { first = Math.min(first, column); last = column; }
-    }
-    if (last < first) throw new Error(`Generated thread has no red cord in row ${row}.`);
-    centers.push((first + last) / 2);
-    widths.push(last - first + 1);
-  }
-  return { width: raster.width, height: raster.height, data, centers, widths, mean: averagePixels(data) };
+  if (seed === -1) { data.fill(0, rowOffset, rowOffset + width * 4); return; }
+  let left = seed;
+  let right = seed;
+  // Do not introduce a stronger alpha threshold: very dim compression fringes
+  // still belong to the line when they remain connected to the actual stroke.
+  while (left > 0 && data[rowOffset + (left - 1) * 4 + 3] > 0) left--;
+  while (right < width - 1 && data[rowOffset + (right + 1) * 4 + 3] > 0) right++;
+  data.fill(0, rowOffset, rowOffset + left * 4);
+  data.fill(0, rowOffset + (right + 1) * 4, rowOffset + width * 4);
 }
 
 export function prepareThreadProfile(profile: ThreadProfile, defaults: Pick<ThreadProfiles, "profileWidth" | "span">): PreparedThreadProfile {
@@ -87,11 +85,12 @@ export function prepareThreadProfile(profile: ThreadProfile, defaults: Pick<Thre
   const raw = { width, height, data: profile.rows.flat() };
   const data = new Float32Array(raw.data.length);
   for (let row = 0; row < height; row++) {
-    const matte = rowMatte(raw, row);
+    const matte: Pixel = profile.matte ? [...profile.matte, 255] : rowMatte(raw, row);
     for (let column = 0; column < width; column++) {
       const offset = (row * width + column) * 4;
       data.set(isolatePixel(raw.data, offset, matte), offset);
     }
+    isolateStrokeRun(data, row, width, span);
   }
   return { width, height, span, data, mean: averagePixels(data, 0, width * 4) };
 }
@@ -115,24 +114,21 @@ function sample(raster: ThreadRaster, x: number, y: number): Pixel {
     result[3] += alphaWeight;
     for (let channel = 0; channel < 3; channel++) result[channel] += raster.data[offset + channel] * alphaWeight;
   }
-  // Bilinear interpolation is premultiplied too: otherwise transparent black
-  // neighbours darken the cord's delicate keyed fibre edges a second time.
+  // Premultiplied sampling preserves the soft source edge next to transparency.
   if (result[3]) for (let channel = 0; channel < 3; channel++) result[channel] /= result[3];
   return result;
 }
 
-export type ThreadScanline = { x: number; y: number; width: number; arc: number; textureDistance: number };
+export type ThreadScanline = { x: number; y: number; width: number };
 
-/** Arc-length UVs keep fibres equally spaced when the bridge bends or tapers. */
+/** Follow the measured curve and gradually interpolate its horizontal width. */
 export function threadScanlines(geometry: RasterThreadGeometry, count: number): ThreadScanline[] {
   const points = geometry.centerline;
   if (points.length < 2 || count < 2 || !Number.isInteger(count)) throw new Error("A thread needs at least two scanlines and geometry points.");
   const height = points.at(-1)!.y;
   if (height <= 0 || geometry.startWidth <= 0 || geometry.endWidth <= 0) throw new Error("Thread dimensions must be positive.");
-  const arcs = [0];
   for (let index = 1; index < points.length; index++) {
     if (points[index].y <= points[index - 1].y) throw new Error("Thread centerline must travel downwards.");
-    arcs.push(arcs[index - 1] + Math.hypot(points[index].x - points[index - 1].x, points[index].y - points[index - 1].y));
   }
   const result: ThreadScanline[] = [];
   let segment = 0;
@@ -142,46 +138,24 @@ export function threadScanlines(geometry: RasterThreadGeometry, count: number): 
     const fraction = (y - points[segment].y) / (points[segment + 1].y - points[segment].y);
     const t = (segment + fraction) / (points.length - 1);
     const width = mix(geometry.startWidth, geometry.endWidth, smooth(t));
-    const arc = mix(arcs[segment], arcs[segment + 1], fraction);
-    const previous = result.at(-1);
     result.push({
-      x: mix(points[segment].x, points[segment + 1].x, fraction), y, width, arc,
-      textureDistance: previous ? previous.textureDistance + (arc - previous.arc) / ((previous.width + width) / 2) : 0,
+      x: mix(points[segment].x, points[segment + 1].x, fraction), y, width,
     });
   }
   return result;
 }
 
-/** Ping-pong the long material strip to avoid a hard texture seam when repeated. */
-export function reflectedTextureRow(distance: number, height: number): number {
-  const last = height - 1;
-  if (last <= 0) return 0;
-  const phase = ((distance % (last * 2)) + last * 2) % (last * 2);
-  return phase <= last ? phase : last * 2 - phase;
-}
-
-type ThreadRenderOptions = { scale?: number; blendLength?: number; from: PreparedThreadProfile; to: PreparedThreadProfile };
+type ThreadRenderOptions = { scale?: number; from: PreparedThreadProfile; to: PreparedThreadProfile };
 
 /**
- * Shift the photographed/generated fibre shading as one colour, not three
- * independent channels. Per-channel gains turn the red cord's pale highlights
- * into an ivory stripe when a dark source channel needs a large average lift.
+ * Carry the source line's entire cross-section through the gap, gently blending
+ * to the next line's cross-section. No added material, grain, fibres or highlight.
+ * Only the outermost row is used: inner rows can contain the illustration frame.
  */
-export function calibrateThreadPixel(pixel: Pixel, sourceMean: Pixel, targetMean: Pixel): Pixel {
-  const gain = clamp(targetMean[0] / Math.max(1, sourceMean[0]), 0.35, 1.35) * 0.65;
-  return [
-    clamp(targetMean[0] + (pixel[0] - sourceMean[0]) * gain, 0, 255),
-    clamp(targetMean[1] + (pixel[1] - sourceMean[1]) * gain, 0, 255),
-    clamp(targetMean[2] + (pixel[2] - sourceMean[2]) * gain, 0, 255),
-    pixel[3],
-  ];
-}
-
-/** Every pixel is sampled from the generated cord or actual artwork border. */
-export function rasterizeThread(material: PreparedThreadMaterial, geometry: RasterThreadGeometry, {
-  scale = 2, blendLength = 16, from, to,
+export function rasterizeThread(geometry: RasterThreadGeometry, {
+  scale = 2, from, to,
 }: ThreadRenderOptions) {
-  if (!Number.isFinite(scale) || scale <= 0 || !Number.isFinite(blendLength) || blendLength <= 0) throw new Error("Invalid thread raster scale.");
+  if (!Number.isFinite(scale) || scale <= 0) throw new Error("Invalid thread raster scale.");
   const height = geometry.centerline.at(-1)!.y;
   const span = Math.max(from.span, to.span, 1.8);
   const fringe = Math.max(geometry.startWidth, geometry.endWidth) * span / 2 + 1;
@@ -191,36 +165,18 @@ export function rasterizeThread(material: PreparedThreadMaterial, geometry: Rast
   const pixelHeight = Math.max(2, Math.ceil(height * scale));
   const data = new Uint8ClampedArray(pixelWidth * pixelHeight * 4);
   const rows = threadScanlines(geometry, pixelHeight);
-  const core = material.widths.reduce((sum, width) => sum + width, 0) / material.widths.length;
-  const fade = Math.min(blendLength, height / 3);
   for (let row = 0; row < pixelHeight; row++) {
     const line = rows[row];
-    const textureY = reflectedTextureRow(line.textureDistance * core, material.height);
-    const lowerRow = Math.floor(textureY);
-    const upperRow = Math.min(lowerRow + 1, material.height - 1);
-    const center = mix(material.centers[lowerRow], material.centers[upperRow], textureY - lowerRow);
-    const coreWidth = mix(material.widths[lowerRow], material.widths[upperRow], textureY - lowerRow);
-    const toneProgress = smooth(line.y / height);
-    const targetMean: Pixel = [
-      mix(from.mean[0], to.mean[0], toneProgress),
-      mix(from.mean[1], to.mean[1], toneProgress),
-      mix(from.mean[2], to.mean[2], toneProgress), 255,
-    ];
-    const endDistance = height - line.y;
-    const edge = line.y < fade ? from : endDistance < fade ? to : null;
-    const edgeDistance = edge === from ? line.y : endDistance;
-    const blend = edge ? 1 - smooth(edgeDistance / fade) : 0;
+    const progress = smooth(line.y / height);
     for (let column = 0; column < pixelWidth; column++) {
       const x = left + (column + 0.5) / scale;
       const across = (x - line.x) / line.width;
-      const pixel = calibrateThreadPixel(sample(material, center + across * coreWidth, textureY), material.mean, targetMean);
-      if (edge) {
-        // Profile columns were sampled at pixel centres within their span.
-        const border = sample(edge, (across / edge.span + 0.5) * edge.width - 0.5, edgeDistance / fade * (edge.height - 1));
-        const alpha = mix(pixel[3], border[3], blend);
-        // Premultiplied interpolation preserves soft fibres as both rasters fade.
-        for (let channel = 0; channel < 3; channel++) pixel[channel] = alpha ? mix(pixel[channel] * pixel[3], border[channel] * border[3], blend) / alpha : 0;
-        pixel[3] = alpha;
+      const a = sample(from, (across / from.span + 0.5) * from.width - 0.5, 0);
+      const b = sample(to, (across / to.span + 0.5) * to.width - 0.5, 0);
+      const alpha = mix(a[3], b[3], progress);
+      const pixel: Pixel = [0, 0, 0, alpha];
+      for (let channel = 0; channel < 3; channel++) {
+        pixel[channel] = alpha ? mix(a[channel] * a[3], b[channel] * b[3], progress) / alpha : 0;
       }
       data.set(pixel, (row * pixelWidth + column) * 4);
     }

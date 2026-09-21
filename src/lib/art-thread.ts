@@ -55,7 +55,7 @@ export function getArtThread(name: string, small = false): ThreadEdges {
   return ART_THREADS[name][small ? "small" : "large"];
 }
 
-/** The plate's mobile continuation and the SVG share the same measured endpoint. */
+/** The plate's mobile continuation shares the artwork's measured endpoint. */
 export function artThreadStyle(name: string): CSSProperties {
   const large = getArtThread(name).bottom;
   const small = getArtThread(name, true).bottom;
@@ -77,6 +77,23 @@ export type ThreadGeometryOptions = {
   startVertical?: boolean;
   minimumWidth?: number;
 };
+
+/** Account for the mobile text-card section between an image and its next gap. */
+export function createArtworkThreadGeometry(from: string, to: string | null, {
+  width, height, small = false, mobile = false, artOnly = false,
+}: { width: number; height: number; small?: boolean; mobile?: boolean; artOnly?: boolean }) {
+  const outgoing = getArtThread(from, small).bottom;
+  if (!outgoing) throw new Error(`Artwork has no outgoing thread: ${from}`);
+  const continuation = to === null;
+  const incoming = continuation ? { ...outgoing, slope: 0 } : getArtThread(to, small).top;
+  return createThreadGeometry(outgoing, incoming, {
+    width, height, minimumWidth: 0,
+    // Behind the card, preserve the image's exit tangent then settle vertically.
+    // Only the gap after that continuation starts vertically. In art-only mode
+    // there is no card, so both tangents come directly from the artwork.
+    startVertical: !continuation && mobile && !artOnly,
+  });
+}
 
 /** Build in actual CSS pixels so resizing cannot stretch the measured tangents. */
 export function createThreadGeometry(from: ThreadEdge, to: ThreadEdge, {

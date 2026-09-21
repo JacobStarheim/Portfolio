@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { ART_THREADS, artThreadStyle, createThreadGeometry, getArtThread } from "../src/lib/art-thread.ts";
+import { ART_THREADS, artThreadStyle, createArtworkThreadGeometry, createThreadGeometry, getArtThread } from "../src/lib/art-thread.ts";
 
 const from = { x: 230, width: 13, color: "#98613a", slope: 0.44 };
 const to = { x: 765, width: 41, color: "#bc794a", slope: -0.35 };
@@ -197,4 +197,29 @@ test("unknown artwork names cannot silently fall back to unrelated measurements"
     assert.throws(() => getArtThread(name, true));
     assert.throws(() => artThreadStyle(name));
   }
+});
+
+test("every mobile card continuation preserves the artwork exit tangent and finishes vertical", () => {
+  for (const small of [false, true]) for (const name of Object.keys(ART_THREADS).slice(0, -1)) {
+    const geometry = createArtworkThreadGeometry(name, null, { width: small ? 362 : 700, height: 450, small, mobile: true });
+    const edge = getArtThread(name, small).bottom;
+    close((geometry.control1.x - geometry.start.x) / geometry.control1.y, edge.slope);
+    close(geometry.control2.x, geometry.end.x);
+    close(geometry.start.x, geometry.end.x);
+    close(geometry.startWidth, geometry.endWidth);
+  }
+});
+
+test("all interludes meet the correct tangents with or without mobile cards", () => {
+  const names = Object.keys(ART_THREADS);
+  for (const small of [false, true]) for (const mobile of [false, true]) for (const artOnly of [false, true]) {
+    for (let index = 0; index < names.length - 1; index++) {
+      const from = names[index], to = names[index + 1];
+      const geometry = createArtworkThreadGeometry(from, to, { width: 700, height: 91, small, mobile, artOnly });
+      const expected = mobile && !artOnly ? 0 : getArtThread(from, small).bottom.slope;
+      close((geometry.control1.x - geometry.start.x) / geometry.control1.y, expected);
+      close((geometry.end.x - geometry.control2.x) / (geometry.end.y - geometry.control2.y), getArtThread(to, small).top.slope);
+    }
+  }
+  assert.throws(() => createArtworkThreadGeometry("about", null, { width: 700, height: 91 }));
 });

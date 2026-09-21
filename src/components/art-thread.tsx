@@ -1,42 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { createThreadGeometry, getArtThread } from "@/lib/art-thread";
+import { createArtworkThreadGeometry } from "@/lib/art-thread";
 import {
-  prepareThreadMaterial, prepareThreadProfile, rasterizeThread,
-  type PreparedThreadMaterial, type PreparedThreadProfile, type ThreadProfiles,
+  prepareThreadProfile, rasterizeThread,
+  type PreparedThreadProfile, type ThreadProfiles,
 } from "@/lib/thread-material";
 
 export { artThreadStyle } from "@/lib/art-thread";
 
 type ArtThreadProps = { from: string; to: string; label: string; artOnly?: boolean };
-type ThreadAssets = { material: PreparedThreadMaterial; profiles: ThreadProfiles };
+type ThreadAssets = { profiles: ThreadProfiles };
 let assetsPromise: Promise<ThreadAssets> | undefined;
 const profiles = new Map<string, PreparedThreadProfile>();
 
 function loadThreadAssets(): Promise<ThreadAssets> {
-  if (!assetsPromise) assetsPromise = Promise.all([
-    new Promise<PreparedThreadMaterial>((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => {
-        try {
-          const canvas = document.createElement("canvas");
-          canvas.width = image.naturalWidth;
-          canvas.height = image.naturalHeight;
-          const context = canvas.getContext("2d", { willReadFrequently: true });
-          if (!context) throw new Error("Canvas is unavailable.");
-          context.drawImage(image, 0, 0);
-          resolve(prepareThreadMaterial(context.getImageData(0, 0, canvas.width, canvas.height)));
-        } catch (error) { reject(error); }
-      };
-      image.onerror = () => reject(new Error("Thread material could not load."));
-      image.src = "/art/thread-material.webp";
-    }),
-    fetch("/art/thread-profiles.json", { credentials: "same-origin" }).then(async (response) => {
-      if (!response.ok) throw new Error("Thread edge profiles could not load.");
-      return response.json() as Promise<ThreadProfiles>;
-    }),
-  ]).then(([material, profiles]) => ({ material, profiles })).catch((error) => {
+  if (!assetsPromise) assetsPromise = fetch("/art/thread-profiles.json", { credentials: "same-origin" }).then(async (response) => {
+    if (!response.ok) throw new Error("Thread edge profiles could not load.");
+    return response.json() as Promise<ThreadProfiles>;
+  }).then((profiles) => ({ profiles })).catch((error) => {
     assetsPromise = undefined;
     throw error;
   });
@@ -91,14 +73,10 @@ function useRasterThread(from: string, to: string | null, artOnly: boolean) {
       try {
         const assets = await loadThreadAssets();
         if (disposed || request !== revision) return;
-        const outgoing = getArtThread(from, small).bottom;
-        if (!outgoing) return;
-        const incoming = continuation ? { ...outgoing, slope: 0 } : getArtThread(to!, small).top;
-        const geometry = createThreadGeometry(continuation ? { ...outgoing, slope: 0 } : outgoing, incoming, {
-          width: rect.width, height, startVertical: continuation || !artOnly && mobile,
-          minimumWidth: 0,
+        const geometry = createArtworkThreadGeometry(from, to, {
+          width: rect.width, height, small, mobile, artOnly,
         });
-        const raster = rasterizeThread(assets.material, geometry, {
+        const raster = rasterizeThread(geometry, {
           scale,
           from: profileFor(assets, from, small, "bottom"),
           to: profileFor(assets, continuation ? from : to!, small, continuation ? "bottom" : "top"),
@@ -154,7 +132,7 @@ export function ArtThread({ from, to, label, artOnly = false }: ArtThreadProps) 
   </div>;
 }
 
-/** The same raster material continues behind the stacked cards on small screens. */
+/** The source illustration's stroke continues behind stacked cards on mobile. */
 export function ThreadContinuation({ name }: { name: string }) {
   const { container, canvas } = useRasterThread(name, null, false);
   return <div ref={container} className="thread-continuation" aria-hidden="true" data-thread-continuation={name}>

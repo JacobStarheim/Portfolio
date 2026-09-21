@@ -9,7 +9,19 @@
 - Checked the mobile menu, art-only toggle, project dialogs, Escape dismissal, focus return and contact link destinations.
 - Full-width art preserves its square aspect ratio. On mobile, text cards flow below the art.
 
-## Textured thread transitions (current version)
+## Source-illustration continuation (approved style)
+
+- The user rejected the generated cord because its physical braided texture did not match the illustrated red stroke. Removed that material from runtime; the bridge now interpolates the complete source-line cross-sections, not a flat average color. No synthetic grain, fibres or extra highlights are added.
+- Regenerated 38 exact-border profiles at both artwork resolutions with wider padding and independent background samples. All 20 artwork WebPs verified unchanged. The source-only preparation is deterministic and needs no generated-cord input.
+- The user approved the education → IN5320 proof and requested the same quality for every transition, followed by push. Visually inspected all nine joins using the large sources and again using the mobile sources in the local-only contact sheet. Original artwork is shown above and below every join for direct comparison; no proof page is part of the deployment.
+- Removed disconnected warm-background specks from Chess and AIpodcast profiles without trimming the stroke's connected soft fringe. Regression tests preserve every alpha sample of the approved education → IN5320 profiles.
+- Corrected mobile continuations to retain the artwork's outgoing tangent, then finish vertically behind the card. The following gap starts vertically; art-only mode uses both original artwork tangents. Tests cover all nine joins, both resolutions and both modes.
+- Browser checks at 320, 390, 640, 641, 760, 761, 1280 and 1920 CSS pixels: all ten artwork images loaded, all nine bridges ready, no horizontal overflow, no out-of-bounds cards, and zero measured seam/canvas gaps. All nine mobile continuations meet the actual image bottom and section bottom, including the opening intro.
+- Art-only checks at 320, 390, 640, 641, 760, 761 and 1280 CSS pixels retain all artworks and bridges while hiding all continuations. Browser console has no errors or warnings. Inspected the actual page on desktop and mobile as well as the isolated proof.
+- Build, TypeScript, ESLint, 42 tests and whitespace checks pass. Independent numeric audit also covers 567 renderer configurations across responsive widths, pixel densities, both modes and mobile continuations, without empty scanlines or clipped canvas edges.
+- Removed the rejected generated cord asset from published files; it remains recoverable in Git history. The historical prompt is explicitly marked as retired. No artwork, portfolio content, store link or contact link changed.
+
+## Generated cord transitions (previous version, rejected style)
 
 - Replaced all nine flat SVG gradient ribbons and nine solid mobile continuation bars with the same generated raster cord material. The ten chapter artworks, content, cards and store URLs are unchanged.
 - Generated a real fiber/twist/shading asset through the built-in image tool. An initial fake-checkerboard output was rejected and corrected with another image-generation edit. The selected opaque dark-matte asset is softly keyed in the renderer; no checkerboard or rectangular matte is shown.

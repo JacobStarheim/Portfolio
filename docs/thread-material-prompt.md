@@ -1,6 +1,6 @@
-# Thread material
+# Retired thread-material experiment
 
-The previous SVG gradient ribbons aligned the positions but flattened the thread's physical material. This revision uses an image-generated cord material for the connecting spans. The ten chapter artworks remain untouched.
+Historical record only. The user rejected this generated cord because it looked like physical yarn rather than the existing illustrated stroke. The current renderer uses only cross-sections sampled from the actual artwork borders. The cord asset is removed from the published files and remains recoverable in Git history at commit `4ba7b34`. The ten chapter artworks remain untouched.
 
 Mode: built-in OpenAI image generation, using `public/art/driver.webp` as the red-thread material/extraction reference. The tool does not expose a selectable or verifiable backend model.
 
@@ -24,9 +24,9 @@ The first output baked in a checkerboard rather than supplying alpha. It was rej
 Use case: precise-object-edit. Image 1 is the edit target. Preserve the vertical red cord exactly: its position, straightness, width, fine fibers, twists, highlights and shading. Change ONLY the background: remove the entire gray-and-white checkerboard and replace it with a completely flat, uniform dark blue-green color #101e20, with no pattern, gradients, paper grain or shadow. The thin wispy thread edges should blend naturally into this dark ground. Keep the cord touching both actual top and bottom edges, centered. No text, no new objects. Output one portrait image with an opaque solid #101e20 background. The checkerboard is unwanted, do not retain any of it.
 ```
 
-## Selected asset
+## Formerly selected asset
 
 - Generated source: `/Users/jacob/.codex/generated_images/01a0c45f-5c62-7a60-a014-8d521860af66/exec-4616340e-d04f-4484-8f44-e1011a1180a1.png`.
-- Project asset: `public/art/thread-material.webp`, lossless mechanical crop retaining the generated texture.
-- `public/art/thread-profiles.json`: tiny RGB samples from the existing artwork borders, not newly drawn colors. Chapter images are unchanged.
-- Preparation: `node --experimental-strip-types scripts/prepare-thread-material.mjs /path/to/generated-cord.png`.
+- Former project asset: `public/art/thread-material.webp`, lossless mechanical crop retaining the generated texture (removed; see Git history).
+- `public/art/thread-profiles.json` now contains wider, exact-edge RGB samples and independent backdrop samples from both responsive artwork resolutions; no cord pixels.
+- Current source-only preparation: `node --experimental-strip-types scripts/prepare-thread-material.mjs` (no image-generation input).
