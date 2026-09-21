@@ -29,10 +29,10 @@ På desktop vises kunsten i full sidebredde med tekstkort oppå. På mobil flytt
 
 ## Kjør lokalt
 
-Bruk Node.js 24 for å matche byggemiljøet på Vercel, samt npm. Den nye porteføljen ligger foreløpig på grenen `codex/art-portfolio`:
+Bruk Node.js 24 for å matche byggemiljøet på Vercel, samt npm. Klon standardgrenen `main`:
 
 ```sh
-git clone --branch codex/art-portfolio https://github.com/JacobStarheim/Portfolio.git
+git clone https://github.com/JacobStarheim/Portfolio.git
 cd Portfolio
 npm ci
 npm run dev
@@ -83,7 +83,7 @@ Vercel-prosjektet `jacobstarheim` er koblet til dette GitHub-repoet. Automatisk 
 - **`codex/art-portfolio`:** pushes bygger en forhåndsvisning på [arbeidsgrenens faste adresse](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app).
 - **`main`:** produksjonsgrenen. Pushes eller merges hit kan oppdatere [jacobstarheim.vercel.app](https://jacobstarheim.vercel.app).
 
-Den nye porteføljen er ennå ikke merget til `main`. Den offentlige førsteversjonen ble publisert separat; videre endringer gjennomgås i forhåndsvisningen før de merges. Når grenen er merget, bør klonekommandoen over oppdateres til standardgrenen.
+Porteføljen og denne README-en ligger på `main`. Videre endringer gjøres på arbeidsgrener og gjennomgås i forhåndsvisning før de merges til produksjonsgrenen.
 
 Vercel bygger fra kildekoden. `VERCEL_URL` brukes til delingsmetadata, og `VERCEL_ENV` styrer om siden kan indekseres: forhåndsvisninger og lokale bygg får `noindex`. Ikke last opp en lokal `out/` med localhost-metadata som et ferdig produksjonsbygg.
 
