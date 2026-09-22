@@ -41,7 +41,7 @@ const norwegian = {
   education: {
     label: "Utdanning og IN5320", chapter: "Å FORSTÅ",
     alt: "Et åpent bibliotek med varme lesesaler, bøker og diagrammer. Den røde tråden følger en vei gjennom etasjene.",
-    category: "UTDANNING", title: "Nysgjerrighet, satt i system.", action: "IN5320 — prosjektet bak en A",
+    category: "UTDANNING", title: "Utdanning", action: "IN5320 — prosjektet bak en A",
     items: [
       { date: "2026 — 2028 · PÅGÅENDE", title: "Master i Computer Science", institution: "Universitetet i Sørøst-Norge", detail: "Forventet fullført juni 2028." },
       { date: "2022 — 2025", title: "Informatikk: design, bruk og interaksjon", institution: "Bachelor · Universitetet i Oslo", detail: "" },
@@ -137,7 +137,7 @@ const english: typeof norwegian = {
   education: {
     label: "Education and IN5320", chapter: "UNDERSTANDING",
     alt: "An open library with warmly lit reading rooms, books and diagrams. The red thread follows a path through the floors.",
-    category: "EDUCATION", title: "Curiosity, with structure.", action: "IN5320 — the project behind an A",
+    category: "EDUCATION", title: "Education", action: "IN5320 — the project behind an A",
     items: [
       { date: "2026 — 2028 · IN PROGRESS", title: "MSc in Computer Science", institution: "University of South-Eastern Norway", detail: "Expected graduation: June 2028." },
       { date: "2022 — 2025", title: "Informatics: Design, Use and Interaction", institution: "Bachelor’s degree · University of Oslo", detail: "" },
