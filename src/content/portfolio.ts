@@ -82,7 +82,7 @@ const norwegian = {
     label: "Sjakkprosjekt", chapter: "Å TENKE FREMOVER",
     alt: "En elfenbensfarget springer i et sjakklandskap av terrasser, broer og fjell. Den røde tråden følger mulige trekk gjennom landskapet.",
     category: "KODE & INTERESSE", title: "Alltid et trekk til.",
-    description: "Jeg liker å se etter mønstre. På brettet, i koden og i forbindelsen mellom dem. Et desktop-verktøy for sjakkanalyse, motorintegrasjon og import av stillinger fra bilder.",
+    description: "Et lokalt desktop-verktøy for sjakkanalyse med Stockfish, Leela Chess Zero (Lc0) og støtte for andre UCI-motorer. MultiPV viser flere trekkvarianter samtidig. Lokale Syzygy-sluttspillbaser gir oppslag på utfall og beste trekk for støttede sluttspill. Bildegjenkjenning lar deg importere brettstillinger fra bilder eller kamera og kontrollere dem før analyse.",
     caption: "ET LITE BRETT. STORE MULIGHETER.", note: "PERSONLIG PROSJEKT",
   },
   about: {
@@ -178,7 +178,7 @@ const english: typeof norwegian = {
     label: "Chess project", chapter: "THINKING AHEAD",
     alt: "An ivory-coloured knight in a chess landscape of terraces, bridges and mountains. The red thread traces possible moves through the landscape.",
     category: "CODE & CURIOSITY", title: "Always another move.",
-    description: "I enjoy looking for patterns. On the board, in code and in the connections between them. A desktop tool for chess analysis, engine integration and importing positions from images.",
+    description: "A local desktop chess analysis tool with Stockfish, Leela Chess Zero (Lc0) and support for other UCI engines. MultiPV displays several move variations at once. Local Syzygy tablebases provide outcomes and best moves for covered endgame positions. Image recognition lets you import board positions from images or a camera and review them before analysis.",
     caption: "A SMALL BOARD. BIG POSSIBILITIES.", note: "PERSONAL PROJECT",
   },
   about: {
