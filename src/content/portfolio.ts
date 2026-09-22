@@ -75,7 +75,7 @@ const norwegian = {
     chapter: "Å LYTTE",
     alt: "Et fantasifullt lydbibliotek med konkylier, bøker, lydbånd og en tom lyttestol. Den røde tråden leder tilbake til lydkilden.",
     category: "PERSONLIG PROSJEKT", title: "Et spørsmål. En kilde. En ny tanke.",
-    description: "Hva om du kunne snakke med en podkast? En AI-prototype som lar deg stille spørsmål — og høre akkurat hvor i opptaket svaret kommer fra.",
+    description: "Hva om du kunne snakke med en podkast? En AI-prototype som lar deg stille spørsmål og høre akkurat hvor i opptaket svaret kommer fra.",
     caption: "FØLG SVARET TILBAKE TIL KILDEN", note: "PROTOTYPE / UTFORSKNING",
   },
   chess: {
@@ -171,7 +171,7 @@ const english: typeof norwegian = {
     chapter: "LISTENING",
     alt: "An imaginative audio library with seashells, books, recording tapes and an empty listening chair. The red thread leads back to the audio source.",
     category: "PERSONAL PROJECT", title: "A question. A source. A new thought.",
-    description: "What if you could talk to a podcast? An AI prototype that lets you ask questions — and hear exactly where in the recording the answer comes from.",
+    description: "What if you could talk to a podcast? An AI prototype that lets you ask questions and hear exactly where in the recording the answer comes from.",
     caption: "FOLLOW THE ANSWER BACK TO ITS SOURCE", note: "PROTOTYPE / EXPLORATION",
   },
   chess: {
