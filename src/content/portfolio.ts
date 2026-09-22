@@ -12,13 +12,13 @@ const norwegian = {
     contribution: "Mitt bidrag", back: "Tilbake til historien", storePreposition: "i",
   },
   hero: {
-    label: "Introduksjon og NIMMO", eyebrow: "PROGRAMVAREUTVIKLER & NYSGJERRIGPER",
+    label: "Introduksjon og NIMMO", eyebrow: "PROGRAMVAREUTVIKLER",
     leadStart: "Jeg bygger ting som knytter", leadEnd: "mennesker, ideer og teknologi sammen.",
     scroll: "EN RØD TRÅD GJENNOM DET JEG GJØR", vertical: "MOBIL / MENNESKER / MULIGHETER",
     alt: "En gravert kystby med broer og en telefonformet portal. En rød tråd forbinder byen fra topp til bunn.",
-    category: "ARBEIDSERFARING", title: "Små detaljer. Bedre hverdag.", action: "Arbeidet mitt hos NIMMO",
+    category: "ARBEIDSERFARING", title: "Mobilutvikling hos NIMMO", action: "Arbeidet mitt hos NIMMO",
     subtitle: "NIMMO · JUNIORUTVIKLER · DELTID",
-    description: "Fra enklere innlogging til tilgjengelige grensesnitt. Jeg utvikler mobilapper for reisende og sjåfører — og følger feil helt ned til årsaken.",
+    description: "Hos NIMMO utvikler jeg mobilapper i Flutter for reisende og sjåfører. Jeg bidrar med nye funksjoner, bedre tilgjengelighet, testing og publisering til App Store og Google Play. Sammen med teamet undersøker og løser jeg også feil på tvers av appene og backend.",
     date: "Juni 2025 — nå", caption: "01 / FORBINDELSER", note: "ET UTVALG AV DET JEG BYGGER OG BRYR MEG OM",
   },
   apps: {
@@ -108,13 +108,13 @@ const english: typeof norwegian = {
     contribution: "My contribution", back: "Back to the story", storePreposition: "on",
   },
   hero: {
-    label: "Introduction and NIMMO", eyebrow: "SOFTWARE DEVELOPER & CURIOUS MIND",
+    label: "Introduction and NIMMO", eyebrow: "SOFTWARE DEVELOPER",
     leadStart: "I build things that bring", leadEnd: "people, ideas and technology together.",
     scroll: "A COMMON THREAD THROUGH WHAT I DO", vertical: "MOBILE / PEOPLE / POSSIBILITIES",
     alt: "An engraved coastal town with bridges and a phone-shaped portal. A red thread connects the town from top to bottom.",
-    category: "WORK EXPERIENCE", title: "Small details. Better everyday life.", action: "My work at NIMMO",
+    category: "WORK EXPERIENCE", title: "Mobile development at NIMMO", action: "My work at NIMMO",
     subtitle: "NIMMO · JUNIOR DEVELOPER · PART-TIME",
-    description: "From easier sign-in to accessible interfaces. I develop mobile apps for passengers and drivers — and trace bugs to their root cause.",
+    description: "At NIMMO, I develop mobile apps in Flutter for passengers and drivers. My contributions include new features, improved accessibility, testing and releases to the App Store and Google Play. Together with the team, I also investigate and fix issues across the apps and backend.",
     date: "June 2025 — present", caption: "01 / CONNECTIONS", note: "A SELECTION OF WHAT I BUILD AND CARE ABOUT",
   },
   apps: {

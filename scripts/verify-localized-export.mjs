@@ -4,10 +4,11 @@ import { createArtRevision } from '../src/build/art-revision.ts';
 
 const revision = createArtRevision('out/art');
 const anchors = ['arbeid', 'nimmo-traveller', 'nimmo-driver', 'utdanning', 'in5320', 'hobbyprosjekter', 'open-bfme', 'aipodcast', 'sjakk', 'om-meg'];
-for (const [locale, language, heading] of [['no', 'nb', 'Små detaljer. Bedre hverdag.'], ['en', 'en', 'Small details. Better everyday life.']]) {
+for (const [locale, language, heading] of [['no', 'nb', 'Mobilutvikling hos NIMMO'], ['en', 'en', 'Mobile development at NIMMO']]) {
   const html = await readFile(`out/${locale}.html`, 'utf8');
   assert.ok(html.includes(`<html lang="${language}"`), `${locale}: correct server-rendered document language`);
   assert.ok(html.includes(heading), `${locale}: correct content without JavaScript`);
+  assert.doesNotMatch(html, /NYSGJERRIGPER|CURIOUS MIND/, `${locale}: removed introductory label stays absent`);
   assert.match(html, new RegExp(`<link rel="canonical" href="[^\"]+/${locale}"`));
   for (const lang of ['nb', 'en', 'x-default']) assert.ok(html.includes(`hrefLang="${lang}"`), `${locale}: alternate ${lang}`);
   for (const id of anchors) assert.ok(html.includes(`id="${id}"`), `${locale}: stable #${id} anchor`);

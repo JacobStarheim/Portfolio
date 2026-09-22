@@ -186,7 +186,7 @@
   z-index: 3;
   bottom: 8%;
   left: 7%;
-  width: clamp(320px, 31vw, 470px);
+  width: clamp(350px, 31vw, 470px);
   scroll-margin-top: 110px;
 }
 
