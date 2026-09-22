@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { artAssetUrl } from "@/lib/art-assets";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     description: "Mobilutvikling, åpne verdener og en god dose nysgjerrighet.",
     type: "website",
     locale: "nb_NO",
-    images: [{ url: "/art/chess.webp", width: 1254, height: 1254, alt: "Et gravert sjakklandskap med en rød tråd" }],
+    images: [{ url: artAssetUrl("chess.webp"), width: 1254, height: 1254, alt: "Et gravert sjakklandskap med en rød tråd" }],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: process.env.VERCEL_ENV === "production", follow: true },

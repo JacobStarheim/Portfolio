@@ -1,5 +1,15 @@
 # Verification — 21 September 2026
 
+## Artwork cache correction — 22 September 2026
+
+- Follow-up after the user saw the old transition on production: the deployed source/export contained the corrected artwork, but `/art/*` retained the same URLs with 24-hour browser caching and a 7-day stale-while-revalidate window. A fresh browser load showed the corrected transition. The user's particular cached response was not directly inspected.
+- Added a deterministic build-time SHA-256 revision covering sorted artwork filenames, both WebP resolutions, and the profile JSON. The gallery, profile fetch and sharing image now use the same revision query. Changing any covered file invalidates all paired request URLs; unchanged bytes keep stable URLs. Existing image caching remains enabled.
+- The local proof uses the exported artwork's revision and shared URL helper, checks it against exported HTML, and versions its own module requests. No artwork, profile pixels, geometry, renderer, layout or portfolio content changed.
+- Static export inspection found all 20 responsive artwork URLs versioned. The source and exported artwork hashes match, and the built client bundle contains the same revision used by the profile loader.
+- Browser verification: the proof rendered 9/9 joins with each resolution. The actual Traveller → Driver join retains the approved appearance at 390 and 1280 CSS px, loads the expected 640/1254 asset with the new revision, and has a ready canvas with no horizontal overflow at either tested size.
+- Added 13 cache-versioning tests (including subtests) for stable ordering/path independence, large/small/profile changes, filenames, additions/removals, ignored files, required assets, shared request versions and missing-revision rejection. All 56 tests, production build, TypeScript, ESLint and whitespace checks pass.
+- The user explicitly requested fixing and pushing this cache correction through the existing production workflow. A regular page refresh is still necessary for a tab that was already open; this does not implement live replacement of an existing document.
+
 ## Traveller → Driver entry correction (approved for publication 22 September)
 
 - The reported wedge came from the Driver source's thick, bright, twisted entry. Used the built-in image tool for a localized correction, with Traveller as the style reference; exact prompts and asset provenance are in `art-driver-prompt.md`.

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import GitHubCalendar from "./github-calendar";
 import Age from "./age";
 import { ArtThread, artThreadStyle, ThreadContinuation } from "./art-thread";
+import { artAssetUrl } from "@/lib/art-assets";
 
 const github = "https://github.com/JacobStarheim";
 const linkedin = "https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/";
@@ -109,9 +110,9 @@ function Arrow() { return <span aria-hidden="true" className="arrow">↗</span>;
 
 function Art({ name, alt, eager = false }: { name: string; alt: string; eager?: boolean }) {
   return <><picture className="artwork">
-    <source media="(max-width: 640px)" srcSet={`/art/${name}-640.webp`} />
+    <source media="(max-width: 640px)" srcSet={artAssetUrl(`${name}-640.webp`)} />
     {/* Native picture serves optimized files without a runtime image service. */}
-    <img src={`/art/${name}.webp`} alt={alt} width={1254} height={1254} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : "auto"} decoding="async" />
+    <img src={artAssetUrl(`${name}.webp`)} alt={alt} width={1254} height={1254} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : "auto"} decoding="async" />
   </picture>{name !== "about" && <ThreadContinuation name={name} />}</>;
 }
 

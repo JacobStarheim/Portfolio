@@ -1,11 +1,18 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import ts from 'typescript';
+import { createArtRevision } from '../src/build/art-revision.ts';
 
 // Local-only magnified proof using the website's actual rendering code.
 // Run after next build. These files live only in ignored out/ and are never deployed.
+const artRevision = createArtRevision('out/art');
+const exportedPage = await readFile('out/index.html', 'utf8');
+if (!exportedPage.includes(`?v=${artRevision}`)) {
+  throw new Error('Exported artwork does not match the page revision. Run npm run build before preparing the proof.');
+}
 await mkdir('out/thread-proof', { recursive: true });
-for (const name of ['art-thread', 'thread-material']) {
-  const source = await readFile(`src/lib/${name}.ts`, 'utf8');
+for (const name of ['art-thread', 'thread-material', 'art-assets']) {
+  const source = (await readFile(`src/lib/${name}.ts`, 'utf8'))
+    .replaceAll('process.env.NEXT_PUBLIC_ART_REVISION', JSON.stringify(artRevision));
   const compiled = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 } });
   await writeFile(`out/thread-proof/${name}.js`, compiled.outputText);
 }
@@ -22,8 +29,9 @@ await writeFile('out/thread-proof/index.html', `<!doctype html>
 </div>
 <main><h2 id="mode">Forstørret nærbilde · originalkunst over og under</h2><div id="proofs"></div></main><p id="status" role="status" aria-live="polite">Laster …</p>
 <script type="module">
-import {createThreadGeometry,getArtThread} from './art-thread.js';
-import {prepareThreadProfile,rasterizeThread} from './thread-material.js';
+import {createThreadGeometry,getArtThread} from './art-thread.js?v=${artRevision}';
+import {prepareThreadProfile,rasterizeThread} from './thread-material.js?v=${artRevision}';
+import {artAssetUrl} from './art-assets.js?v=${artRevision}';
 const names=['nimmo','traveller','driver','education','in5320','hobbies','bfme','podcast','chess','about'];
 const selector=document.querySelector('#pair');
 const view=document.querySelector('#view');
@@ -35,11 +43,11 @@ for(let i=0;i<names.length-1;i++){const option=document.createElement('option');
 selector.value='3';
 const images=new Map();
 const image=src=>{if(!images.has(src))images.set(src,(async()=>{const img=new Image();img.src=src;await img.decode();return img})());return images.get(src)};
-const profiles=await fetch('/art/thread-profiles.json').then(r=>{if(!r.ok)throw new Error('Kunne ikke laste strekprofiler');return r.json()});
+const profiles=await fetch(artAssetUrl('thread-profiles.json')).then(r=>{if(!r.ok)throw new Error('Kunne ikke laste strekprofiler');return r.json()});
 let revision=0;
 async function renderPair(index,small){
  const from=names[index],to=names[index+1],suffix=small?'-640':'',profileVariant=small?'small':'large';
- const [upper,lower]=await Promise.all([image('/art/'+from+suffix+'.webp'),image('/art/'+to+suffix+'.webp')]);
+ const [upper,lower]=await Promise.all([image(artAssetUrl(from+suffix+'.webp')),image(artAssetUrl(to+suffix+'.webp'))]);
  const width=small?390:1254,height=small?91:110,margin=65,clipWidth=140,scale=3;
  const start=getArtThread(from,small).bottom,end=getArtThread(to,small).top;
  const geometry=createThreadGeometry(start,end,{width,height,minimumWidth:0});

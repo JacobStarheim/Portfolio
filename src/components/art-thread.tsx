@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { createArtworkThreadGeometry } from "@/lib/art-thread";
+import { artAssetUrl } from "@/lib/art-assets";
 import {
   prepareThreadProfile, rasterizeThread,
   type PreparedThreadProfile, type ThreadProfiles,
@@ -15,7 +16,7 @@ let assetsPromise: Promise<ThreadAssets> | undefined;
 const profiles = new Map<string, PreparedThreadProfile>();
 
 function loadThreadAssets(): Promise<ThreadAssets> {
-  if (!assetsPromise) assetsPromise = fetch("/art/thread-profiles.json", { credentials: "same-origin" }).then(async (response) => {
+  if (!assetsPromise) assetsPromise = fetch(artAssetUrl("thread-profiles.json"), { credentials: "same-origin" }).then(async (response) => {
     if (!response.ok) throw new Error("Thread edge profiles could not load.");
     return response.json() as Promise<ThreadProfiles>;
   }).then((profiles) => ({ profiles })).catch((error) => {

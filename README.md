@@ -78,6 +78,7 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 - [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
 - [src/components/art-thread.tsx](src/components/art-thread.tsx) og [src/lib/art-thread.ts](src/lib/art-thread.ts) — forbindelser mellom kunstbildenes målte trådender.
 - [src/lib/thread-material.ts](src/lib/thread-material.ts) — videreføring og blanding av strekens faktiske tverrsnitt fra bildene.
+- [src/build/art-revision.ts](src/build/art-revision.ts) og [src/lib/art-assets.ts](src/lib/art-assets.ts) — innholdsbasert versjonering av kunstbilder og tråddata, slik at nettleseren ikke blander gamle og nye filer.
 - [src/components/age.tsx](src/components/age.tsx) og [src/lib/age.ts](src/lib/age.ts) — alder som oppdateres automatisk etter norsk dato.
 - [src/components/github-calendar.tsx](src/components/github-calendar.tsx) — GitHub-kalender, henting, feilvisning og tastaturbetjening.
 - [src/lib/github-contributions.ts](src/lib/github-contributions.ts) — validering og datobasert kalenderlayout.
@@ -112,6 +113,12 @@ node scripts/prepare-art.mjs /absolutt/sti/til/nye-originaler traveller driver i
 ```
 
 Skriptet lager varianter med opptil 1254 og 640 piksler bredde i `public/art/`. Det endrer størrelse og komprimering, ikke motivene. De seks eksisterende kunstbildene er beholdt uendret da de fire nye ble lagt til. Se [promptoversikten](docs/artwork-prompts.md) for motivgrunnlag og genereringshistorikk.
+
+### Oppdateringer og hurtigbuffer
+
+Ved bygging beregner `next.config.ts` én SHA-256-versjon fra filnavn og innhold i alle `public/art/*.webp` og `thread-profiles.json`. Begge bildeoppløsninger, tråddataene og delingsbildet bruker `?v=<versjon>` i adressen. Endres én av filene, får hele settet nye adresser automatisk; uendrede bygg beholder samme versjon. Dermed kan bildene fortsatt mellomlagres uten at en ny sideinnlasting gjenbruker gamle, uversjonerte filer.
+
+Ingen manuell versjonsøkning eller miljøvariabel er nødvendig. Etter bildeendringer: regenerer nødvendige trådprofiler, bygg på nytt, eller start utviklingsserveren på nytt. En allerede åpen side må fortsatt oppdateres vanlig; den skifter ikke innhold mens man leser den. Den lokale overgangsprøven bruker samme versjon som `out/` og avviser et eksportsett der HTML og kunst ikke stemmer overens.
 
 ## Publisering med Vercel
 
