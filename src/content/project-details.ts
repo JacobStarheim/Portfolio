@@ -69,10 +69,10 @@ const norwegian: Record<string, Project> = {
   },
   chess: {
     title: "Alltid et trekk til.", eyebrow: "CHESS · PERSONLIG PROSJEKT",
-    lead: "Et analyseverktøy for en interesse jeg stadig kommer tilbake til",
-    body: ["Sjakk gir meg den samme gleden som programmering: å lete etter mønstre, prøve en idé og oppdage noe jeg ikke så først. Chess er et desktop-prosjekt for å utforske stillinger og analysere partier.", "Appen integrerer eksisterende sjakkmotorer; jeg har ikke laget Stockfish eller Lc0. Mitt arbeid ligger i grensesnittet og samspillet mellom motorer, sjakkdata og bildeimport."],
-    contributions: ["Integrert Stockfish og Lc0 gjennom UCI-protokollen.", "Jobbet med FEN/PGN og lokale Syzygy-sluttspillbaser.", "Bygget bildeimport av sjakkstillinger med en Python-/OpenCV-prosess.", "Koblet dette sammen i en Electron-app med React og TypeScript."],
-    stack: ["Electron", "React", "TypeScript", "Python", "OpenCV", "UCI"],
+    lead: "Sjakkanalyse med flere motorer og AI-basert bildeimport",
+    body: ["Chess er et lokalt desktop-verktøy for å utforske stillinger og analysere partier med Stockfish, Leela Chess Zero (Lc0) og andre UCI-motorer.", "AI-basert bildegjenkjenning gjør det mulig å importere brettstillinger fra bilder eller kamera. En lokal Python-prosess bruker OpenCV til å rotere, beskjære og rette opp perspektivet, før en forhåndstrent modell fra chessimg2pos tolker brikkeplasseringen. Resultatet kan kontrolleres og korrigeres i bretteditoren før analyse.", "Appen integrerer eksisterende sjakkmotorer og en forhåndstrent bildegjenkjenningsmodell. Mitt arbeid er brukergrensesnittet og integrasjonen mellom motorer, sjakkdata, bildebehandling og manuell kontroll av importerte stillinger."],
+    contributions: ["Integrert Stockfish og Lc0 gjennom UCI-protokollen, med MultiPV for visning av flere trekkvarianter.", "Jobbet med FEN/PGN og lokale Syzygy-sluttspillbaser.", "Integrert en forhåndstrent AI-modell fra chessimg2pos for gjenkjenning av brikkeplassering fra bilder og kamera.", "Bygget bildebehandling med Python og OpenCV, med kontroll og korrigering av resultatet i bretteditoren.", "Koblet dette sammen i en Electron-app med React og TypeScript."],
+    stack: ["Electron", "React", "TypeScript", "Python", "OpenCV", "chessimg2pos", "UCI"],
     links: [{ label: "Se Chess på GitHub", href: `${github}/chess` }],
   },
 };
@@ -140,10 +140,10 @@ const english: Record<string, Project> = {
   },
   chess: {
     title: "Always one more move.", eyebrow: "CHESS · PERSONAL PROJECT",
-    lead: "An analysis tool for an interest I keep coming back to",
-    body: ["Chess gives me the same enjoyment as programming: looking for patterns, trying an idea and discovering something I missed at first. Chess is a desktop project for exploring positions and analysing games.", "The app integrates existing chess engines; I did not create Stockfish or Lc0. My work is in the interface and the connections between engines, chess data and image import."],
-    contributions: ["Integrated Stockfish and Lc0 through the UCI protocol.", "Worked with FEN/PGN and local Syzygy endgame tablebases.", "Built image import for chess positions using a Python/OpenCV process.", "Connected these pieces in an Electron app with React and TypeScript."],
-    stack: ["Electron", "React", "TypeScript", "Python", "OpenCV", "UCI"],
+    lead: "Multi-engine chess analysis with AI-based image import",
+    body: ["Chess is a local desktop tool for exploring positions and analysing games with Stockfish, Leela Chess Zero (Lc0) and other UCI engines.", "AI-based image recognition makes it possible to import board positions from images or a camera. A local Python process uses OpenCV to rotate, crop and correct the perspective before a pretrained model from chessimg2pos recognises the piece placement. The result can be reviewed and corrected in the board editor before analysis.", "The app integrates existing chess engines and a pretrained image recognition model. My work is the user interface and the integration between engines, chess data, image processing and manual review of imported positions."],
+    contributions: ["Integrated Stockfish and Lc0 through the UCI protocol, with MultiPV to display multiple move variations.", "Worked with FEN/PGN and local Syzygy endgame tablebases.", "Integrated a pretrained AI model from chessimg2pos to recognise piece placement from images and camera captures.", "Built image processing with Python and OpenCV, with review and correction of the result in the board editor.", "Connected these pieces in an Electron app with React and TypeScript."],
+    stack: ["Electron", "React", "TypeScript", "Python", "OpenCV", "chessimg2pos", "UCI"],
     links: [{ label: "View Chess on GitHub", href: `${github}/chess` }],
   },
 };
