@@ -10,7 +10,7 @@ import {
 
 export { artThreadStyle } from "@/lib/art-thread";
 
-type ArtThreadProps = { from: string; to: string; label: string; artOnly?: boolean };
+type ArtThreadProps = { from: string; to: string; label: string; artOnly?: boolean; note?: string };
 type ThreadAssets = { profiles: ThreadProfiles };
 let assetsPromise: Promise<ThreadAssets> | undefined;
 const profiles = new Map<string, PreparedThreadProfile>();
@@ -124,12 +124,12 @@ function useRasterThread(from: string, to: string | null, artOnly: boolean) {
   return { container, canvas };
 }
 
-export function ArtThread({ from, to, label, artOnly = false }: ArtThreadProps) {
+export function ArtThread({ from, to, label, artOnly = false, note = "FØLG TRÅDEN" }: ArtThreadProps) {
   const { container, canvas } = useRasterThread(from, to, artOnly);
   return <div ref={container} className="interlude art-thread" aria-hidden="true" data-thread-from={from} data-thread-to={to}>
     <span className="interlude-label">{label}</span>
     <canvas ref={canvas} className="thread-canvas" />
-    <span className="interlude-note">FØLG TRÅDEN</span>
+    <span className="interlude-note">{note}</span>
   </div>;
 }
 

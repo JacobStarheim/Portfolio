@@ -1,5 +1,14 @@
 # Verification — 21 September 2026
 
+## Norwegian and English — 22 September 2026
+
+- Added complete, statically rendered `/no` and `/en` pages, including cards, project dialogs, image descriptions, navigation, accessibility labels, automatic age and GitHub activity. The server passes only the selected content dictionary to the portfolio client component.
+- The neutral root selects a saved manual choice first, then the first supported browser language in preference order (`no`/`nb`/`nn` or `en`), with English as the fallback. No country/IP lookup is used. Explicit locale URLs always win; direct visits do not overwrite a saved choice. Manual links also work without JavaScript, and blocked storage cannot break navigation.
+- Browser checks confirmed automatic entry, remembered Norwegian selection, direct English access despite that selection, and preservation of query parameters and section anchors when switching language or entering at the root. Locale-specific document language, canonical links, hreflang and social metadata are also checked in the exported HTML.
+- English cards and the header were measured at 320, 390, 761 and 1280 CSS px; no cards extend beyond their section. Norwegian and English both fit at 320 px. Fixed pre-existing narrow-screen overflow from undrawn, lazy canvases by hiding them until the renderer has assigned their final dimensions. No artwork, source profile, thread geometry or renderer logic changed.
+- Visually checked mobile/desktop layouts, the English mobile menu, English NIMMO and IN5320 dialogs, Norwegian NIMMO dialog, Escape dismissal/focus return, English age and loaded GitHub calendar labels, and Norwegian art-only mode. Art-only mode retains all ten artworks and nine bridges. No console errors or warnings appeared during these checks.
+- All 73 unit tests, production build, TypeScript, ESLint, whitespace checks and the new `npm run verify:export` pass. Export checks preserve all section IDs, store/contact destinations and 20 versioned artwork URLs. Independent reviews found no release blockers; Norwegian project-detail content and all artwork files remain unchanged.
+
 ## Artwork cache correction — 22 September 2026
 
 - Follow-up after the user saw the old transition on production: the deployed source/export contained the corrected artwork, but `/art/*` retained the same URLs with 24-hour browser caching and a 7-day stale-while-revalidate window. A fresh browser load showed the corrected transition. The user's particular cached response was not directly inspected.

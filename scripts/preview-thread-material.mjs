@@ -5,7 +5,7 @@ import { createArtRevision } from '../src/build/art-revision.ts';
 // Local-only magnified proof using the website's actual rendering code.
 // Run after next build. These files live only in ignored out/ and are never deployed.
 const artRevision = createArtRevision('out/art');
-const exportedPage = await readFile('out/index.html', 'utf8');
+const exportedPage = await readFile('out/no.html', 'utf8');
 if (!exportedPage.includes(`?v=${artRevision}`)) {
   throw new Error('Exported artwork does not match the page revision. Run npm run build before preparing the proof.');
 }

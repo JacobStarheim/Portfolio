@@ -69,13 +69,17 @@ npm run dev
 | `npm run lint` | Kjør ESLint uten tillatte advarsler. |
 | `npm test` | Test automatisk alder, trådgeometri, datavalidering og kalenderlayout uten nettverk. |
 | `npm run build` | Lag et produksjonsbygg og eksporter til `out/`. |
+| `npm run verify:export` | Kontroller norsk/engelsk HTML, språkmetadata, lenker og bildeversjoner etter bygging. |
 | `npm start` | Server det ferdige bygget fra `out/` på port 3000. |
 
 Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `next start` skal ikke brukes.
 
 ## Hvor innholdet ligger
 
-- [src/components/portfolio.tsx](src/components/portfolio.tsx) — tekster, prosjektdetaljer, kontaktlenker, meny og dialoger.
+- [src/components/portfolio.tsx](src/components/portfolio.tsx) — kunstgalleri, kontaktlenker, meny og dialoger.
+- [src/content/portfolio.ts](src/content/portfolio.ts) og [src/content/project-details.ts](src/content/project-details.ts) — kvalitetssikrede norske og engelske tekster; bare valgt språk sendes til galleriet.
+- [src/lib/language.ts](src/lib/language.ts) — prioritert språkvalg og stabile språklenker.
+- [src/components/language-entry.tsx](src/components/language-entry.tsx) og [src/components/language-switcher.tsx](src/components/language-switcher.tsx) — automatisk inngang og manuelt språkvalg.
 - [src/components/art-thread.tsx](src/components/art-thread.tsx) og [src/lib/art-thread.ts](src/lib/art-thread.ts) — forbindelser mellom kunstbildenes målte trådender.
 - [src/lib/thread-material.ts](src/lib/thread-material.ts) — videreføring og blanding av strekens faktiske tverrsnitt fra bildene.
 - [src/build/art-revision.ts](src/build/art-revision.ts) og [src/lib/art-assets.ts](src/lib/art-assets.ts) — innholdsbasert versjonering av kunstbilder og tråddata, slik at nettleseren ikke blander gamle og nye filer.
@@ -85,7 +89,7 @@ Kjør `npm run build` før `npm start`. Prosjektet bruker statisk eksport, så `
 - [src/styles/github-calendar.css](src/styles/github-calendar.css) — kalenderens papirfelt, aktivitetsruter og mobilvisning.
 - [src/styles/portfolio.css](src/styles/portfolio.css) — layout, kunstgalleri, tekstkort og mobilvisning.
 - [src/app/globals.css](src/app/globals.css) — globale stiler, fokusmarkeringer og redusert bevegelse.
-- [src/app/layout.tsx](src/app/layout.tsx) — språk, fonter og delingsmetadata.
+- [src/app/[locale]/layout.tsx](src/app/[locale]/layout.tsx), [src/components/site-document.tsx](src/components/site-document.tsx) og [src/lib/site-metadata.ts](src/lib/site-metadata.ts) — dokumentets språk, fonter og lokale delingsmetadata.
 - [public/art/](public/art/) — nettoptimaliserte illustrasjoner.
 - [public/jacob-starheim.jpeg](public/jacob-starheim.jpeg) — originalt portrettfoto, vist i «Om meg».
 - [scripts/prepare-art.mjs](scripts/prepare-art.mjs) — størrelsestilpasning og WebP-komprimering.
@@ -121,6 +125,16 @@ Ved bygging beregner `next.config.ts` én SHA-256-versjon fra filnavn og innhold
 Ingen manuell versjonsøkning eller miljøvariabel er nødvendig. Etter bildeendringer: regenerer nødvendige trådprofiler, bygg på nytt, eller start utviklingsserveren på nytt. En allerede åpen side må fortsatt oppdateres vanlig; den skifter ikke innhold mens man leser den. Den lokale overgangsprøven bruker samme versjon som `out/` og avviser et eksportsett der HTML og kunst ikke stemmer overens.
 
 ## Publisering med Vercel
+
+### Norsk og engelsk
+
+`/no` og `/en` er separate, ferdigbygde sider. Direkte språklenker respekteres alltid. På `/` velges språk i nettleseren: først et tidligere manuelt valg, deretter det første støttede språket i `navigator.languages`, og til slutt engelsk. `no`, `nb` og `nn` går til bokmålsversjonen; `en` går til engelsk. IP-adresse og land brukes ikke.
+
+«Norsk / English» er tilgjengelig i toppmenyen. Et manuelt valg lagres lokalt under `jacobstarheim-language`; bare valg via språkvelgeren lagres, ikke automatiske valg eller besøk fra delte lenker. Vanlig språkbytte beholder søkeparametere og anker, så lenker til enkeltprosjekter fortsatt fungerer. Blokkert lagring hindrer ikke navigering. Uten JavaScript fungerer språklenkene og det forhåndsbygde innholdet fortsatt; automatisk valg krever JavaScript.
+
+Begge versjoner har korrekt `<html lang>`, egne titler/beskrivelser, canonical-adresser og `hreflang`-alternativer. Inngangssiden viser kun navn og språklenker før videresending, ikke en portefølje på feil språk. Oppsettet krever ingen server, oversettelsestjeneste eller runtime-middleware.
+
+### Git-publisering
 
 Vercel-prosjektet `jacobstarheim` er koblet til dette GitHub-repoet. Automatisk bygging fra en push til arbeidsgrenen er verifisert.
 

@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/language";
+
 export type ContributionDay = {
   date: string;
   count: number;
@@ -11,10 +13,32 @@ export type ContributionCalendar = {
 
 const DAY_MS = 86_400_000;
 const ACTIVITY_URL = "https://github-contributions-api.jogruber.de/v4/JacobStarheim?y=last";
-const MONTH_LABELS = [
-  "jan", "feb", "mar", "apr", "mai", "jun",
-  "jul", "aug", "sep", "okt", "nov", "des",
-];
+const localeTags: Record<Locale, string> = { no: "nb-NO", en: "en-GB" };
+const formats = Object.fromEntries(Object.entries(localeTags).map(([locale, tag]) => [locale, {
+  number: new Intl.NumberFormat(tag),
+  shortDate: new Intl.DateTimeFormat(tag, { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }),
+  fullDate: new Intl.DateTimeFormat(tag, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }),
+  month: new Intl.DateTimeFormat(tag, { month: "short", timeZone: "UTC" }),
+}])) as Record<Locale, {
+  number: Intl.NumberFormat;
+  shortDate: Intl.DateTimeFormat;
+  fullDate: Intl.DateTimeFormat;
+  month: Intl.DateTimeFormat;
+}>;
+
+export function formatContributionNumber(count: number, locale: Locale = "no") {
+  return formats[locale].number.format(count);
+}
+
+export function formatContributionCount(count: number, locale: Locale = "no") {
+  const noun = locale === "no" ? "bidrag" : count === 1 ? "contribution" : "contributions";
+  return `${formatContributionNumber(count, locale)} ${noun}`;
+}
+
+/** Keep date-only API values in UTC, regardless of the visitor's time zone. */
+export function formatContributionDate(date: string, locale: Locale = "no", style: "short" | "long" = "long") {
+  return formats[locale][style === "short" ? "shortDate" : "fullDate"].format(new Date(dateTimestamp(date)));
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -92,7 +116,7 @@ export async function loadContributions(
 }
 
 /** Sunday-first, UTC-only layout. Missing boundary days remain absent, not zero. */
-export function buildCalendarLayout(days: ContributionDay[]) {
+export function buildCalendarLayout(days: ContributionDay[], locale: Locale = "no") {
   const calendar = parseContributions({ contributions: days });
   const offset = new Date(dateTimestamp(calendar.days[0].date)).getUTCDay();
   const columns = Math.ceil((offset + calendar.days.length) / 7);
@@ -106,7 +130,7 @@ export function buildCalendarLayout(days: ContributionDay[]) {
   const candidates = cells
     .filter(({ day, index }) => index === 0 || day.date.endsWith("-01"))
     .map(({ day, column }) => ({
-      label: MONTH_LABELS[new Date(dateTimestamp(day.date)).getUTCMonth()],
+      label: formats[locale].month.format(new Date(dateTimestamp(day.date))).replace(/\.$/, ""),
       column,
     }));
   const months: Array<{ label: string; column: number }> = [];
@@ -115,7 +139,7 @@ export function buildCalendarLayout(days: ContributionDay[]) {
     const candidate = candidates[index];
     const nextColumn = candidates[index + 1]?.column ?? columns;
     const previousColumn = months[months.length - 1]?.column;
-    // Three short letters need three week columns; prioritize the next full month.
+    // Short month labels need three week columns; prioritize the next full month.
     if (nextColumn - candidate.column < 3 || columns - candidate.column < 3) continue;
     if (previousColumn !== undefined && candidate.column - previousColumn < 3) continue;
     months.push(candidate);

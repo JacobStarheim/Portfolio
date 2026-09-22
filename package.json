@@ -8,6 +8,7 @@
     "start": "serve out -l 3000",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "verify:export": "node scripts/verify-localized-export.mjs",
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {

@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { getAge } from "@/lib/age";
+import type { Locale } from "@/lib/language";
 
 function subscribe(onChange: () => void) {
   let timeout: number;
@@ -33,7 +34,7 @@ function subscribe(onChange: () => void) {
 // calculates it, so an old deployment can never supply a stale build-time age.
 const getServerSnapshot = () => null;
 
-export default function Age() {
+export default function Age({ locale = "no" }: { locale?: Locale }) {
   const age = useSyncExternalStore(subscribe, getAge, getServerSnapshot);
-  return age === null ? null : `${age} år, `;
+  return age === null ? null : `${age} ${locale === "no" ? "år" : "years old"}, `;
 }

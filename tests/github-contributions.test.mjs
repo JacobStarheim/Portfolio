@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildCalendarLayout, loadContributions, parseContributions } from "../src/lib/github-contributions.ts";
+import { buildCalendarLayout, formatContributionCount, formatContributionDate, formatContributionNumber, loadContributions, parseContributions } from "../src/lib/github-contributions.ts";
 
 const day = (date, count = 0, level = 0) => ({ date, count, level });
 const parse = (contributions, total = {}) => parseContributions({ contributions, total });
@@ -93,6 +93,45 @@ test("Norwegian month labels fit and omit cramped partial months", () => {
     if (index > 0) assert.ok(month.column - layout.months[index - 1].column >= 3);
   }
   assert.deepEqual(buildCalendarLayout([day("2026-01-01")]).months, []);
+});
+
+test("localises month labels without changing the UTC calendar layout", () => {
+  const days = range("2026-04-01", 275);
+  const norwegian = buildCalendarLayout(days, "no");
+  const english = buildCalendarLayout(days, "en");
+  assert.deepEqual(norwegian.months.map(({ label }) => label), ["apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"]);
+  assert.deepEqual(english.months.map(({ label }) => label), ["Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]);
+  assert.deepEqual(english.cells, norwegian.cells);
+  assert.equal(english.columns, norwegian.columns);
+  assert.deepEqual(english.months.map(({ column }) => column), norwegian.months.map(({ column }) => column));
+});
+
+test("formats Norwegian and English contribution counts and singulars", () => {
+  assert.equal(formatContributionCount(0, "en"), "0 contributions");
+  assert.equal(formatContributionCount(1, "en"), "1 contribution");
+  assert.equal(formatContributionCount(2, "en"), "2 contributions");
+  assert.equal(formatContributionCount(1234, "en"), "1,234 contributions");
+  assert.equal(formatContributionNumber(1234, "en"), "1,234");
+  assert.equal(formatContributionCount(1, "no"), "1 bidrag");
+  assert.equal(formatContributionCount(2), "2 bidrag");
+  assert.equal(formatContributionNumber(1234, "no"), "1\u00a0234");
+});
+
+test("formats date-only values in the requested language while retaining UTC", () => {
+  const previous = process.env.TZ;
+  try {
+    for (const timeZone of ["America/Los_Angeles", "Pacific/Auckland", "UTC"]) {
+      process.env.TZ = timeZone;
+      assert.equal(formatContributionDate("2026-09-21", "no"), "21. september 2026");
+      assert.equal(formatContributionDate("2026-09-21", "en"), "21 September 2026");
+      assert.equal(formatContributionDate("2026-09-21", "no", "short"), "21. sep. 2026");
+      assert.equal(formatContributionDate("2026-09-21", "en", "short"), "21 Sept 2026");
+    }
+  } finally {
+    if (previous === undefined) delete process.env.TZ;
+    else process.env.TZ = previous;
+  }
+  assert.throws(() => formatContributionDate("2026-02-30", "en"), /Invalid contribution date/);
 });
 
 test("loads and validates public counts with private-safe request options", async () => {
