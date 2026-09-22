@@ -1,5 +1,15 @@
 # Verification — 21 September 2026
 
+## Traveller → Driver entry correction (approved for publication 22 September)
+
+- The reported wedge came from the Driver source's thick, bright, twisted entry. Used the built-in image tool for a localized correction, with Traveller as the style reference; exact prompts and asset provenance are in `art-driver-prompt.md`.
+- Packaged only a narrow generated strand lane in the upper 200 px (scaled for mobile). Independent decoded-pixel comparison against `e7a72ef` confirms just 2,500 large-asset pixels and 627 small-asset pixels changed. All other pixels, both outgoing Driver edges, and the other 18 artwork files are unchanged.
+- Only the two Driver top measurements and their source profiles changed. All other 38 profile entries, including null endpoints, are identical. The shared renderer is unchanged, preserving the other eight joins.
+- Visually checked the corrected join in the magnified proof at both source resolutions, then on the actual page at 390 and 1280 CSS px in art-only mode and at 390 px with text. The corrected connector and adjacent joins have zero measured layout/canvas gaps. Fresh mobile loading has no horizontal overflow or out-of-bounds cards. No browser console errors or warnings were reported.
+- A desktop-to-mobile resize exposed an unrelated stale offscreen Education canvas extending beyond the viewport; reloading the page cleared the overflow. Its renderer, source and profiles are untouched by this change; this targeted correction does not claim to fix that existing resize behavior.
+- Production build, TypeScript, ESLint, all 43 tests and whitespace checks pass. The new regression test rejects the previous large width/color mismatch at both asset resolutions.
+- The correction was verified locally on 21 September without publishing. On 22 September the user approved the visual result and explicitly requested pushing it through the existing `main` → Vercel production workflow. Re-ran the 43 tests, build, TypeScript, ESLint and whitespace checks before publication; all passed.
+
 ## Local first version
 
 - Production build, TypeScript check, ESLint and `git diff --check` passed.

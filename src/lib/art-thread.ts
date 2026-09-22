@@ -17,8 +17,8 @@ export const ART_THREADS: Record<string, ArtMeasurements> = {
     small: { top: { x: 501.5734, width: 3.125, color: "#762e2c", slope: 0.0464 }, bottom: { x: 501.5518, width: 3.125, color: "#793029", slope: -0.0089 } },
   },
   driver: {
-    large: { top: { x: 499.0271, width: 7.177, color: "#d34835", slope: -0.0874 }, bottom: { x: 497.9077, width: 5.5821, color: "#8b0f0c", slope: 0.0726 } },
-    small: { top: { x: 499.1652, width: 7.8125, color: "#d14c42", slope: -0.0403 }, bottom: { x: 497.7919, width: 4.6875, color: "#821816", slope: 0.0061 } },
+    large: { top: { x: 499.2991, width: 4.7847, color: "#953d32", slope: -0.0753 }, bottom: { x: 497.9077, width: 5.5821, color: "#8b0f0c", slope: 0.0726 } },
+    small: { top: { x: 499.2948, width: 4.6875, color: "#a54034", slope: -0.0484 }, bottom: { x: 497.7919, width: 4.6875, color: "#821816", slope: 0.0061 } },
   },
   education: {
     large: { top: { x: 489.8403, width: 3.1898, color: "#842d2a", slope: 0.2686 }, bottom: { x: 473.179, width: 3.9872, color: "#8e2e24", slope: 0.3585 } },

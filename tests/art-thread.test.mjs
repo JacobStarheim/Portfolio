@@ -175,6 +175,24 @@ test("all artwork has valid large and small measurements and About ends the thre
   }
 });
 
+test("Traveller to Driver stays slender and avoids the bright entry flare at both resolutions", () => {
+  for (const small of [false, true]) {
+    const outgoing = getArtThread("traveller", small).bottom;
+    const incoming = getArtThread("driver", small).top;
+    const variant = small ? "small" : "large";
+    const widthRatio = Math.max(outgoing.width, incoming.width) / Math.min(outgoing.width, incoming.width);
+    assert.ok(widthRatio <= 1.6, `${variant} entry width ratio ${widthRatio} must not recreate the widening wedge`);
+
+    const rgb = color => color.slice(1).match(/.{2}/g).map(channel => Number.parseInt(channel, 16));
+    const fromColor = rgb(outgoing.color);
+    const toColor = rgb(incoming.color);
+    const colorDistance = Math.hypot(...fromColor.map((channel, index) => channel - toColor[index]));
+    // Permit the small asset's resampling variation without restoring the
+    // rejected entry's much brighter red highlight (over 59 RGB units away).
+    assert.ok(colorDistance <= 50, `${variant} entry color distance ${colorDistance} must remain modest`);
+  }
+});
+
 test("CSS continuations use each asset's outgoing bottom border and responsive measurements", () => {
   for (const name of Object.keys(ART_THREADS)) {
     const style = artThreadStyle(name);

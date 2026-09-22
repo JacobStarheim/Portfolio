@@ -46,3 +46,35 @@ Original generation: `/Users/jacob/.codex/generated_images/01a0c550-fd62-7d81-9d
 First continuity edit: `/Users/jacob/.codex/generated_images/01a0c550-fd62-7d81-9d1d-7b9b28c19213/exec-fbf9a281-3fbd-4d08-a0ae-8a1467daf556.png`.
 Selected generation: `/Users/jacob/.codex/generated_images/01a0c550-fd62-7d81-9d1d-7b9b28c19213/exec-77c30563-2353-4a97-8ad9-5df924e7349d.png`.
 
+## Local entry correction — Traveller → Driver
+
+After the source-based transitions were published, the user identified this join as still too thick and flared. The original Driver entry measured 9 px against Traveller's 4 px in the large assets, and 5 px against 2 px in the small assets. The mismatch was in the artwork itself, not the connector geometry.
+
+The built-in image tool was used for two localized edits, with Driver as the target and Traveller as the stroke reference. The selected second result removes the pale twisted bulge, narrows the entering stroke, and mutes its color. Measured entry widths are now 6 px and 3 px; the requested 4 px in the prompt is an artistic target, not a claim about the resulting pixels.
+
+First edit: `/Users/jacob/.codex/generated_images/01a0c45f-5c62-7a60-a014-8d521860af66/exec-e2973255-3688-49a7-8e9d-a7657cc4fe9c.png`.
+Selected edit: `/Users/jacob/.codex/generated_images/01a0c45f-5c62-7a60-a014-8d521860af66/exec-21c21a63-079c-4006-86b7-89f0fb582a33.png`.
+
+### Exact first entry-edit prompt
+
+```text
+Use case: precise-object-edit. Image 1 is the EDIT TARGET: the square Driver artwork. Image 2 is only the STYLE REFERENCE for the fine smooth red illustrated stroke. Make ONE extremely local correction to Image 1. Edit ONLY the red line where it enters the actual TOP edge, down through the uppermost roughly 15% of the canvas. In Image 1 this entering strand is too fat, strongly twisted like physical cord, and has a pale swollen highlight at the very top. Replace that local upper strand with the slender, smooth, softly shaded, muted vermilion/crimson illustrated line seen at the BOTTOM edge of Image 2. At the actual top border keep its exact original center x=49.9% and near-vertical direction, but use a line approximately 4 pixels wide in a 1254-pixel-wide canvas (0.32% width), like the reference. No pale or white highlight, no braiding, no fibres, no knot or bulge, no glow, no wedge. Preserve subtle source-like darker edge shading: not a flat vector strip. Keep the existing exact centerline route of the strand as it descends and curves toward the windshield. Very gently reconcile with the original downstream strand by around y=15%, with no seam or abrupt width change. Preserve everything else in Image 1 EXACTLY: dark textured engraved paper, cream inset frame including its intersection with the line, scenery, cabin, wheel, hands, moon, mountains, road, bus stops, all other red line segments, bottom edge, composition, colors, crop and dimensions. Do not repaint or reinterpret the artwork, add objects, move line endpoints, change framing, or add any text. Output the complete square Driver image with only this tiny top-entry strand correction, not a collage or a detail crop.
+```
+
+### Exact second entry-edit prompt
+
+```text
+Use case: precise-object-edit. Image 1 is the edit target; Image 2 is a red-line thickness/color reference ONLY. Make one tiny correction to the red line at the TOP CENTER of Image 1, only in the first 100 pixels from the top of this 1254x1254 image. It is currently still 6 pixels wide and bright saturated red. Narrow that top-entry line to TWO THIRDS its current width, approximately FOUR pixels, and mute its red toward the exact dusty brick-red line at the BOTTOM center of Image 2 (roughly #993c37 rather than bright scarlet). Preserve its current center position x≈626 and centerline path. Keep natural soft edge shading and soft antialiasing; no flat marker stroke, white highlight, swelling, knot, braid, fibres or glow. From y=100 to y=180, reconcile almost imperceptibly with the existing unmodified downstream line, still a single smooth continuous illustrated stroke. All pixels outside this tiny upper red-line correction must remain unchanged: do not re-render the composition, driver, cabin, scenery, background paper, cream border, colors or other red-line segments. Keep the original square canvas, size and crop. Return the full image with only the top line slightly thinner and more muted.
+```
+
+### Packaging and preservation
+
+`scripts/prepare-driver-entry.mjs` blends only the generated strand lane into the pre-edit assets, fading back into the original stroke between y=120 and y=200 at full size. It does not draw a replacement stroke. The result is saved losslessly to preserve every unrelated decoded source pixel; this deliberately increases the WebP file sizes.
+
+```sh
+node scripts/prepare-driver-entry.mjs SELECTED_EDIT.png ORIGINAL_ART_DIRECTORY SEPARATE_OUTPUT_DIRECTORY
+```
+
+Use the Driver assets from commit `e7a72ef` as the original baseline, and copy the two prepared outputs into `public/art/` afterward. Do not use the already-corrected files as the baseline. If rebuilding all artwork from the original generation PNGs, apply this correction last. Then remeasure Driver and regenerate the source profiles with `node --experimental-strip-types scripts/prepare-thread-material.mjs`.
+
+Final assets: `public/art/driver.webp` and `public/art/driver-640.webp`. Only 2,500 pixels (0.159%) and 627 pixels (0.153%) respectively differ from the pre-edit decoded assets. The changed bounds are x=618–717/y=0–195 and x=316–366/y=0–100. All other pixels, including the complete outgoing Driver edge, remain identical. Only the two Driver top measurements and profiles change; all other artwork and profiles remain unchanged.
