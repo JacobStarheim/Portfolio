@@ -67,8 +67,8 @@ const norwegian = {
   bfme: {
     chapter: "Å GJENSKAPE",
     alt: "Minas Tirith i gravyrstil: en enorm klippe deler den hvite byen, med buede murringer på begge sider og et slankt hvitt tårn over citadellet. En rød tråd følger portene gjennom byen.",
-    title: "Gamle verdener. Nye oppdagelser.", action: "Utforsk bidragene",
-    description: "Å forstå et system ved å bygge det opp igjen. Jeg bidrar til rekonstruksjon av spillkode i C++ og ble invitert inn som collaborator i begge prosjektene.",
+    title: "Open source-bidrag til BFME", action: "Utforsk bidragene",
+    description: "Jeg bidrar til Open BFME, som rekonstruerer spillkoden til Ringenes herre-spillene Battle for Middle-earth 1 og 2. Gjennom reverse engineering analyserer jeg hvordan spillene fungerer og gjenskaper deler av funksjonaliteten i C++. Bidragene mine er tatt inn i begge prosjektene, og jeg ble invitert inn som collaborator.",
     caption: "BAK FASADEN FINNES ET SYSTEM", note: "BIDRAG TIL ET FELLES PROSJEKT",
   },
   podcast: {
@@ -163,8 +163,8 @@ const english: typeof norwegian = {
   bfme: {
     chapter: "RECONSTRUCTING",
     alt: "Minas Tirith in an engraving style: an enormous rock divides the white city, with curved rings of walls on both sides and a slender white tower above the citadel. A red thread follows the gates through the city.",
-    title: "Old worlds. New discoveries.", action: "Explore my contributions",
-    description: "Understanding a system by rebuilding it. I contribute to reconstructing game code in C++ and was invited to become a collaborator in both projects.",
+    title: "Open-source contributions to BFME", action: "Explore my contributions",
+    description: "I contribute to Open BFME, which reconstructs the game code of the Lord of the Rings games Battle for Middle-earth 1 and 2. Through reverse engineering, I analyse how the games work and recreate parts of their functionality in C++. My contributions have been merged into both projects, and I was invited to become a collaborator.",
     caption: "BEHIND THE FACADE IS A SYSTEM", note: "CONTRIBUTING TO A SHARED PROJECT",
   },
   podcast: {
