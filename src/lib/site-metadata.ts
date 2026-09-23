@@ -8,7 +8,7 @@ export function siteMetadata(locale?: Locale): Metadata {
   const description = norwegian
     ? "Jacob Vindal Starheim. Programvareutvikler med sans for mobil, gode brukeropplevelser og hvordan ting virker. Utforsk arbeid, prosjekter og utdanning."
     : "Jacob Vindal Starheim. Software developer interested in mobile apps, thoughtful user experiences and how things work. Explore my work, projects and education.";
-  const origin = process.env.VERCEL_ENV === "production" ? "https://jacobstarheim.vercel.app"
+  const origin = process.env.VERCEL_ENV === "production" ? "https://jacobstarheim.no"
     : process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3100";
   return {
     metadataBase: new URL(origin), title, description,

@@ -2,7 +2,7 @@
 
 En personlig portefølje der arbeid, utdanning og interesser møtes i et sammenhengende kunstgalleri. Ti gravyrpregede illustrasjoner bindes sammen av en rød tråd, med prosjektkort som forteller historiene underveis.
 
-[Besøk nettsiden](https://jacobstarheim.vercel.app) · [Forhåndsvisning av arbeidsgrenen](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app) · [LinkedIn](https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/)
+[Besøk nettsiden](https://jacobstarheim.no) · [Forhåndsvisning av arbeidsgrenen](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app) · [LinkedIn](https://www.linkedin.com/in/jacob-vindal-starheim-9aa946325/)
 
 <img src="public/art/nimmo.webp" alt="Et gravert kystlandskap med en telefonformet portal og en gjennomgående rød tråd." width="720" />
 
@@ -139,11 +139,13 @@ Begge versjoner har korrekt `<html lang>`, egne titler/beskrivelser, canonical-a
 Vercel-prosjektet `jacobstarheim` er koblet til dette GitHub-repoet. Automatisk bygging fra en push til arbeidsgrenen er verifisert.
 
 - **`codex/art-portfolio`:** pushes bygger en forhåndsvisning på [arbeidsgrenens faste adresse](https://jacobstarheim-git-codex-art-portfolio-jacobs-projects-deb8c182.vercel.app).
-- **`main`:** produksjonsgrenen. Pushes eller merges hit kan oppdatere [jacobstarheim.vercel.app](https://jacobstarheim.vercel.app).
+- **`main`:** produksjonsgrenen. Pushes eller merges hit kan oppdatere [jacobstarheim.no](https://jacobstarheim.no).
 
 Porteføljen og denne README-en ligger på `main`. Videre endringer gjøres på arbeidsgrener og gjennomgås i forhåndsvisning før de merges til produksjonsgrenen.
 
-Vercel bygger fra kildekoden. `VERCEL_URL` brukes til delingsmetadata, og `VERCEL_ENV` styrer om siden kan indekseres: forhåndsvisninger og lokale bygg får `noindex`. Ikke last opp en lokal `out/` med localhost-metadata som et ferdig produksjonsbygg.
+Vercel bygger fra kildekoden. Med `VERCEL_ENV=production` bruker canonical-adresser, språkalternativer og delingsmetadata hoveddomenet `https://jacobstarheim.no`. Forhåndsvisninger bruker sin egen `VERCEL_URL`, mens lokale bygg uten denne variabelen bruker `http://localhost:3100`. Bare produksjonsbygg kan indekseres; forhåndsvisninger og lokale bygg får `noindex`. Ikke last opp en lokal `out/` med localhost-metadata som et ferdig produksjonsbygg.
+
+For å kontrollere produksjonsmetadata lokalt: kjør `VERCEL_ENV=production npm run build`, deretter `VERCEL_ENV=production npm run verify:export`. Sistnevnte kontrollerer at `/`, `/no` og `/en` bruker hoveddomenet i canonical, alle språkalternativer og Open Graph-adresser, inkludert delingsbildet.
 
 `.env*` og lokal Vercel-autentisering skal ikke legges i Git eller lastes opp som kildefiler. Se [verifikasjonsnotatene](docs/verification.md) for tester og oppsetthistorikk.
 
